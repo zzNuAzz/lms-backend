@@ -47,18 +47,18 @@ type ContentDetails {
 
 # Top level declarations
 type Query {
-    # get user is loging in, get by token in cookie from req
-    currentUser: SignedInUser
+    # get user is logging in, get by token in cookie from req
+    currentUser: SignedInUser!
     # get user info by id
     userProfile(userId: Int!): UserProfile
     # check username before create account
-    usernameAvailability(username: String!): Boolean
+    usernameAvailability(username: String!): Boolean!
     # get list course
-    courseList(hostId: Int): [CourseDetails!]!
+    # courseList(hostId: Int): [CourseDetails!]!
     # get course
-    courseDetails(courseId: Int): CourseDetails!
+    # courseDetails(courseId: Int): CourseDetails!
     # get course contents
-    content(contentId: Int): ContentDetails!
+    # content(contentId: Int): ContentDetails!
 }
 
 # Custom input type declarations

@@ -7,6 +7,6 @@
         "password": ""
     },
     "port": 3000,
-    "jwt": "JSON_WEB_TOKEN_SECRET",
+    "jwt": "",
     "bcrypt_salt": 10
 }

@@ -32,14 +32,10 @@ const createUser = async (_, { user: userInput }) => {
     //validate input
     await validateUsernameAndPassword(userInput);
 
-    const user = await db.Users.create(
-        {
-            ...userInput,
-            password: await bcrypt.hash(userInput.password, SALT_ROUNDS),
-        },
-        { raw: true }
-    );
-    console.log(user.get({ plain: true }));
+    const user = await db.Users.create({
+        ...userInput,
+        password: await bcrypt.hash(userInput.password, SALT_ROUNDS),
+    });
 
     return camelCase(user.get({ plain: true }));
 };

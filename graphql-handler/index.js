@@ -40,7 +40,7 @@ const server = new ApolloServer({
     },
     context: getContext,
     playground: true,
-    //   introspection: true,
+    introspection: true,
 });
 
 function installHandler(app) {

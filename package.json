@@ -1,0 +1,31 @@
+{
+    "name": "learning-management-system",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "engines": {
+        "node": "14.x",
+        "npm": "6.x"
+    },
+    "scripts": {
+        "local": "NODE_ENV=development nodemon index.js",
+        "start": "NODE_ENV=production node index.js"
+    },
+    "author": "NuA",
+    "license": "ISC",
+    "dependencies": {
+        "apollo-server-express": "^2.17.0",
+        "bcrypt": "^5.0.0",
+        "body-parser": "^1.19.0",
+        "change-case-object": "^2.0.0",
+        "config": "^3.3.2",
+        "cookie-parser": "^1.4.5",
+        "express": "^4.17.1",
+        "jsonwebtoken": "^8.5.1",
+        "morgan": "^1.10.0",
+        "mysql2": "^2.2.5",
+        "nodemon": "^2.0.4",
+        "sequelize": "^4.44.4"
+    },
+    "devDependencies": {}
+}

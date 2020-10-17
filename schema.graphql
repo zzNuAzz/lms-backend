@@ -1,0 +1,99 @@
+# Custom type declarations
+
+enum UserRole {
+    Student
+    Teacher
+}
+
+enum ContentType {
+    Document
+    Assignment
+}
+
+type UserProfile {
+    userId: String!
+    username: String!
+    role: UserRole!
+    firstName: String
+    lastName: String
+    phone: String
+    address: String
+    birthday: String
+    pictureUrl: String
+}
+
+# Status user
+type SignedInUser {
+    signedIn: Boolean!
+    user: UserProfile
+}
+
+type CourseDetails {
+    courseId: Int!
+    hostId: Int!
+    courseName: String!
+    members: [Int!]!
+    pendingEnroll: [Int!]!
+}
+
+type ContentDetails {
+    contentId: Int!
+    title: String!
+    type: ContentType!
+    timeCreated: String!
+    url: String
+    description: String
+}
+
+# Top level declarations
+type Query {
+    # get user is loging in, get by token in cookie from req
+    currentUser: SignedInUser
+    # get user info by id
+    userProfile(userId: Int!): UserProfile
+    # check username before create account
+    usernameAvailability(username: String!): Boolean
+    # get list course
+    courseList(hostId: Int): [CourseDetails!]!
+    # get course
+    courseDetails(courseId: Int): CourseDetails!
+    # get course contents
+    content(contentId: Int): ContentDetails!
+}
+
+# Custom input type declarations
+
+# input for create user
+input UserAccountInput {
+    username: String!
+    password: String!
+    role: UserRole! = Student
+    # firstName: String
+    # lastName: String
+    # phone: String
+    # address: String
+    # birthday: String
+}
+
+input UserUpdateInput {
+    firstName: String
+    lastName: String
+    address: String
+    phone: String
+    birthday: String
+    # pictureUrl: String
+}
+
+input PasswordUpdateInput {
+    currentPassword: String!
+    newPassword: String!
+}
+
+type Mutation {
+    # create account, default Student type
+    createUserAccount(user: UserAccountInput!): UserProfile!
+    # edit user info
+    updateUserProfile(changes: UserUpdateInput!): UserProfile!
+    # update password
+    updateUserPassword(input: PasswordUpdateInput!): Boolean!
+}

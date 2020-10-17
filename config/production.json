@@ -1,0 +1,12 @@
+{
+    "database": {
+        "host": "",
+        "port": "",
+        "name": "",
+        "user": "",
+        "password": ""
+    },
+    "port": 3001,
+    "jwt": "",
+    "bcrypt_salt": 10
+}

@@ -1,33 +1,45 @@
 module.exports = (sequelize, Sequelize) => {
-    const CourseMembers = sequelize.define('CourseMembers', {
-        course_member_id: {
-            type: Sequelize.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-        },
+    const CourseMembers = sequelize.define(
+        'CourseMembers',
+        {
+            course_member_id: {
+                type: Sequelize.INTEGER,
+                autoIncrement: true,
+                primaryKey: true,
+            },
 
-        course_id: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-        },
+            course_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
 
-        user_id: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-        },
+            user_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false,
+            },
 
-        description: {
-            type: Sequelize.STRING,
+            description: {
+                type: Sequelize.STRING,
+            },
+            status: {
+                type: Sequelize.ENUM,
+                values: ['Pending', 'Accepted', 'Rejected'],
+                defaultValue: 'Pending',
+            },
         },
-        status: {
-            type: Sequelize.ENUM,
-            values: ['Pending', 'Accepted', 'Rejected'],
-            defaultValue: 'Pending',
-        },
-    });
+        {
+            indexes: [
+                {
+                    unique: true,
+                    fields: ['course_id', 'user_id'],
+                },
+            ],
+        }
+    );
 
     CourseMembers.associate = models => {
         CourseMembers.belongsTo(models.Courses, {
+            as: 'course',
             foreignKey: 'course_id',
             targetKey: 'course_id',
         });

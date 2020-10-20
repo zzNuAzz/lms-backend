@@ -30,14 +30,14 @@ installHandler(app);
 
 db.sequelize
     .sync({
-        // force: true,
-        force: false,
+        force: true,
+        // force: false,
     })
     .then(async () => {
         console.log('connect db success.');
-        // if (process.env.NODE_ENV !== 'production') {
-        //     await require('./seed')();
-        // }
+        if (process.env.NODE_ENV !== 'production') {
+            await require('./seed')();
+        }
 
         app.listen(config.get('port'), e => {
             if (!e) {

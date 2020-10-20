@@ -21,8 +21,10 @@ const resolvers = {
     },
     Mutation: {
         createUserAccount: users.createUser,
+        enrollCourse: mustBeStudent(users.enrollCourse),
         updateUserProfile: mustBeLogin(users.updateUserProfile),
         updateUserPassword: mustBeLogin(users.updateUserPassword),
+        updateCourseMember: mustBeTeacher(courses.updateCourseMember),
     },
 };
 

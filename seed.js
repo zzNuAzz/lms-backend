@@ -16,6 +16,8 @@ const courseMember = (...args) => {
   return { course_id, user_id, description, status}
 }
 
+
+
 const seed = async () => {
 
   await db.Users.create(user('1','username1','$2b$10$vtlA5IiGMWYE1.BZW4nthe27b1wlawLiLmt7AmjN79GPYjs9Yw9N6','Student','first 1','last 1',NULL,NULL,NULL,NULL,NULL));
@@ -27,8 +29,8 @@ const seed = async () => {
   await db.Users.create(user('7','username7','$2b$10$aZkdZDpDFMGSoEnqEGY6ZOVymJtcc4ywc64O3qu3wEXiYb9Xzc70q','Student',NULL,NULL,NULL,NULL,NULL,NULL,NULL));
   await db.Users.create(user('8','username8','$2b$10$3yfHAhm0MfxZXFnVTkwsxOOL10lUiGP0h1pnfrVVms7cTjL1Cfysy','Student',NULL,NULL,NULL,NULL,NULL,NULL,NULL));
   await db.Users.create(user('9','username9','$2b$10$D1T4tELN2rsbnjX4TYduReTzBEFR9OKeHUo1eRytnqBF.2xqTlp0y','Student',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL));
-  await db.Users.create(user('11','username11','$2b$10$04ncysEyTBu/AhJa0hg6bOltLOFhInHJAgscH730zpZOWVt2ybCk6','Teacher',NULL,NULL,NULL,NULL,NULL,NULL,NULL));
-  await db.Users.create(user('12','username12','$2b$10$EphtuMcOE/R8eqlTEAAZp.qNPl8nk2p.8.0Jdu52G7Z.vquucS2xO','Teacher','ABC','DFF',NULL,NULL,NULL,NULL,NULL));
+  await db.Users.create(user('10','username10','$2b$10$04ncysEyTBu/AhJa0hg6bOltLOFhInHJAgscH730zpZOWVt2ybCk6','Teacher',NULL,NULL,NULL,NULL,NULL,NULL,NULL));
+  await db.Users.create(user('11','username11','$2b$10$EphtuMcOE/R8eqlTEAAZp.qNPl8nk2p.8.0Jdu52G7Z.vquucS2xO','Teacher','ABC','DFF',NULL,NULL,NULL,NULL,NULL));
   
   await db.Courses.create(course('1', '10', 'Đồ họa máy tính', 'miêu tả môn đồ họa'));
   await db.Courses.create(course('2', '11', 'Quản lý dự án', NULL));
@@ -41,14 +43,15 @@ const seed = async () => {
   await db.CourseMembers.create(courseMember('4', '1', '4', NULL, 'Accepted'));
   await db.CourseMembers.create(courseMember('5', '1', '7', 'Miêu tả cho course member 5', 'Rejected'));
   await db.CourseMembers.create(courseMember('6', '2', '1', NULL, 'Pending'));
-  await db.CourseMembers.create(courseMember('7', '2', '4', 'Miêu tả cho course member 7', 'Accepted'));
-  await db.CourseMembers.create(courseMember('8', '2', '2', NULL, 'Pending'));
-  await db.CourseMembers.create(courseMember('9', '2', '8', NULL, 'Accepted'));
+  await db.CourseMembers.create(courseMember('7', '2', '2', 'Miêu tả cho course member 7', 'Accepted'));
+  await db.CourseMembers.create(courseMember('8', '2', '4', NULL, 'Pending'));
+  await db.CourseMembers.create(courseMember('9', '2', '5', NULL, 'Accepted'));
   await db.CourseMembers.create(courseMember('10', '2', '6', NULL, 'Pending'));
-  await db.CourseMembers.create(courseMember('11', '2', '5', 'Miêu tả cho course member 11', 'Rejected'));
-
-
-  return;
+  await db.CourseMembers.create(courseMember('11', '2', '8', 'Miêu tả cho course member 11', 'Rejected'));
+  await db.CourseMembers.create(courseMember('12', '3', '1', NULL, 'Pending'));
+  await db.CourseMembers.create(courseMember('13', '3', '2', NULL, 'Accepted'));
+  await db.CourseMembers.create(courseMember('14', '4', '5', NULL, 'Accepted'));
+  await db.CourseMembers.create(courseMember('15', '4', '6', NULL, 'Pending'));
 };
 
 module.exports = seed;

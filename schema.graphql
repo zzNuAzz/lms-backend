@@ -91,6 +91,11 @@ type Query {
     ): userList!
 }
 
+type BooleanMessage {
+    success: Boolean!
+    message: String
+}
+
 # Custom input type declarations
 
 # input for create user
@@ -98,11 +103,11 @@ input UserAccountInput {
     username: String!
     password: String!
     role: UserRole! = Student
-    # firstName: String
-    # lastName: String
-    # phone: String
-    # address: String
-    # birthday: String
+    firstName: String
+    lastName: String
+    phone: String
+    address: String
+    birthday: String
 }
 
 input UserUpdateInput {
@@ -125,5 +130,18 @@ type Mutation {
     # edit user info
     updateUserProfile(changes: UserUpdateInput!): UserProfile!
     # update password
-    updateUserPassword(input: PasswordUpdateInput!): Boolean!
+    updateUserPassword(
+        currentPassword: String!
+        newPassword: String!
+    ): BooleanMessage!
+    # student enroll
+    enrollCourse(courseId: Int!, description: String): BooleanMessage!
+    # create course member (for teacher add user to course)
+    createCourseMember(courseId: Int, userId: Int!): BooleanMessage!
+    # update member enroll status (for teacher)
+    updateCourseMember(
+        courseMemberId: Int!
+        status: EnrollStatus!
+        description: String
+    ): BooleanMessage!
 }

@@ -30,6 +30,10 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'forum_thread_id',
             targetKey: 'forum_thread_id',
         });
+        ThreadPosts.belongsTo(models.Users, {
+            foreignKey: 'author_id',
+            targetKey: 'user_id',
+        })
     };
     return ThreadPosts;
 };

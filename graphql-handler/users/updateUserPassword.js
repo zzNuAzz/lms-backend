@@ -5,9 +5,14 @@ const config = require('config');
 
 const SALT_ROUNDS = config.get('bcrypt_salt') || 10;
 const setUserPassword = async (userId, newPassword) => {
-    const password = await bcrypt.hash(newPassword, SALT_ROUNDS);
-    await db.Users.update({ password }, { where: snakeCase({ userId }) });
-    return true;
+    try {
+        const password = await bcrypt.hash(newPassword, SALT_ROUNDS);
+        await db.Users.update({ password }, { where: snakeCase({ userId }) });
+    } catch (err) {
+        console.log(err);
+        return { success: false, message: err.message };
+    }
+    return { success: true };
 };
 
 // validate user password input
@@ -15,8 +20,9 @@ const validateUserPassword = password => {
     console.log('validate input password', { password });
 };
 
-const updateUserPassword = async (_, { input }, { userCtx }) => {
-    const { currentPassword, newPassword } = input;
+const updateUserPassword = async (_, args, { userCtx }) => {
+    if (userCtx.error) throw new AuthenticationError(userCtx.error);
+    const { currentPassword, newPassword } = args;
     validateUserPassword(newPassword);
     const {
         user: { userId },
@@ -26,7 +32,13 @@ const updateUserPassword = async (_, { input }, { userCtx }) => {
     });
 
     const matchPassword = await bcrypt.compare(currentPassword, password);
-    return matchPassword && setUserPassword(userId, newPassword);
+    if (!matchPassword) {
+        return {
+            success: false,
+            message: 'Input password is incorrect',
+        };
+    }
+    return setUserPassword(userId, newPassword);
 };
 
 module.exports = updateUserPassword;

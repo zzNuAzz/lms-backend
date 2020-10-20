@@ -1,28 +1,27 @@
 const { AuthenticationError } = require('apollo-server-express');
 // HOC for graphql resolver
 const mustBeLogin = resolver => (root, args, { userCtx }) => {
-    if (!userCtx == null || !userCtx.signedIn) {
-        throw new AuthenticationError('You must be signed first');
+    if (!userCtx || !userCtx.signedIn || !userCtx.user) {
+        userCtx.error = 'You must be signed first.';
     }
     return resolver(root, args, { userCtx });
 };
 
 const mustBeTeacher = resolver => (root, args, { userCtx }) => {
-    if (!userCtx == null || !Ctx.signedIn) {
-        throw new AuthenticationError('You must be signed first');
+    if (!userCtx || !userCtx.signedIn || !userCtx.user) {
+        userCtx.error = 'You must be signed first.';
+    } else if (userCtx.user.role !== 'Teacher') {
+        userCtx.error = "You don't have permission. This only for Teacher.";
     }
-    if (userCtx.role !== 'Teacher') {
-        throw new AuthenticationError("You don't have permission");
-    }
+
     return resolver(root, args, { userCtx });
 };
 
 const mustBeStudent = resolver => (root, args, { userCtx }) => {
-    if (!userCtx == null || !userCtx.signedIn) {
-        throw new AuthenticationError('You must be signed first');
-    }
-    if (userCtx.role !== 'Student') {
-        throw new AuthenticationError("You don't have permission");
+    if (!userCtx || !userCtx.signedIn || !userCtx.user) {
+        userCtx.error = 'You must be signed first.';
+    } else if (userCtx.user.role !== 'Student') {
+        userCtx.error = "You don't have permission. This only for Student.";
     }
     return resolver(root, args, { userCtx });
 };

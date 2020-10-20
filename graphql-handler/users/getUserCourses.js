@@ -1,8 +1,8 @@
 const { snakeCase, camelCase } = require('change-case-object');
 const db = require('../../models');
 
-const getUserCourses = async (_, arg, { userCtx }) => {
-    const { userId, status, pageNumber = 0, pageSize = 10 } = arg;
+const getUserCourses = async (_, args, { userCtx }) => {
+    const { userId, status, pageNumber = 0, pageSize = 10 } = args;
     const filters = { status, userId };
 
     const totalRecords = await db.CourseMembers.count({

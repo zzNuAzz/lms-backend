@@ -4,6 +4,7 @@ module.exports.checkUsername = require('./checkUsername');
 
 module.exports.createUser = require('./createUser');
 
+module.exports.enrollCourse = require('./enrollCourse');
 module.exports.updateUserProfile = require('./updateUserProfile');
 module.exports.updateUserPassword = require('./updateUserPassword');
 

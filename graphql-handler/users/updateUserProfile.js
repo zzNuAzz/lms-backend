@@ -6,6 +6,7 @@ const validateUserInfo = changes => {
 };
 
 const updateUserProfile = async (_, { changes }, { userCtx }) => {
+    if (userCtx.error) throw new AuthenticationError(userCtx.error);
     const {
         user: { userId },
     } = userCtx;

@@ -1,33 +1,28 @@
 const { ApolloServer } = require('apollo-server-express');
 const fs = require('fs');
-// const { getCourseList, getCourseById, getContentById } = require('./course.js');
+const users = require('./users');
 const {
-    getUserProfileById,
-    checkUsername,
-    createUser,
-    resolveUser,
-    updateUserProfile,
     permission: { mustBeLogin, mustBeTeacher, mustBeStudent },
-    updateUserPassword,
 } = require('./users');
-// const { resolveUser, getUser, mustBeSignedIn } = require('./userAuthenticate');
+const courses = require('./courses');
 
 const { getUser } = require('../controllers/users');
 
 //mapping graphql query with function
 const resolvers = {
     Query: {
-        userProfile: getUserProfileById,
-        currentUser: resolveUser,
-        usernameAvailability: checkUsername,
-        // courseList: getCourseList,
-        // courseDetails: getCourseById,
-        // content: getContentById,
+        userProfile: users.getUserProfileById,
+        userCourseList: users.getUserCourses,
+        currentUser: users.resolveUser,
+        usernameAvailability: users.checkUsername,
+        courseList: courses.getCourseList,
+        courseUserList: courses.getCourseUserList,
+        course: courses.getCourse,
     },
     Mutation: {
-        createUserAccount: createUser,
-        updateUserProfile: mustBeLogin(updateUserProfile),
-        updateUserPassword: mustBeLogin(updateUserPassword),
+        createUserAccount: users.createUser,
+        updateUserProfile: mustBeLogin(users.updateUserProfile),
+        updateUserPassword: mustBeLogin(users.updateUserPassword),
     },
 };
 

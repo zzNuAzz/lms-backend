@@ -1,3 +1,4 @@
+const { AuthenticationError } = require('apollo-server-express');
 // HOC for graphql resolver
 const mustBeLogin = resolver => (root, args, { userCtx }) => {
     if (!userCtx == null || !userCtx.signedIn) {

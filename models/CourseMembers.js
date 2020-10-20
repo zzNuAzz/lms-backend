@@ -16,15 +16,13 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
 
-        role: {
-            type: Sequelize.ENUM,
-            values: ['host', 'member'],
-            defaultValue: 'member',
-            allowNull: false,
-        },
-
         description: {
             type: Sequelize.STRING,
+        },
+        status: {
+            type: Sequelize.ENUM,
+            values: ['Pending', 'Accepted', 'Rejected'],
+            defaultValue: 'Pending',
         },
     });
 

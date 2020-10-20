@@ -6,6 +6,11 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
         },
 
+        host_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+        },
+
         name: {
             type: Sequelize.STRING,
             allowNull: false,
@@ -14,11 +19,6 @@ module.exports = (sequelize, Sequelize) => {
         description: {
             type: Sequelize.STRING,
         },
-
-        // create_at: {
-        //     type: Sequelize.STRING,
-        //     allowNull: false,
-        // },
     });
 
     Courses.associate = models => {
@@ -37,6 +37,11 @@ module.exports = (sequelize, Sequelize) => {
         Courses.hasMany(models.Documents, {
             foreignKey: 'course_id',
             sourceKey: 'course_id',
+        });
+        Courses.belongsTo(models.Users, {
+            as: 'host',
+            foreignKey: 'host_id',
+            targetKey: 'user_id',
         });
     };
     return Courses;

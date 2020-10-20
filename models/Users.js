@@ -35,7 +35,7 @@ module.exports = (sequelize, Sequelize) => {
         address: {
             type: Sequelize.STRING,
         },
-        
+
         email: {
             type: Sequelize.STRING,
             validate: {
@@ -52,6 +52,11 @@ module.exports = (sequelize, Sequelize) => {
         },
     });
 
-    Users.associate = models => {};
+    Users.associate = models => {
+        Users.hasMany(models.CourseMembers, {
+            foreignKey: 'user_id',
+            sourceKey: 'user_id',
+        });
+    };
     return Users;
 };

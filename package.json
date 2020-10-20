@@ -8,7 +8,7 @@
         "npm": "6.x"
     },
     "scripts": {
-        "local": "NODE_ENV=development nodemon index.js",
+        "local": "NODE_ENV=development nodemon index.js -w . --ext js,graphql,json",
         "start": "NODE_ENV=production node index.js"
     },
     "author": "NuA",

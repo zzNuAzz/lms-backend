@@ -7,6 +7,7 @@ const config = require('config');
 const db = require('./models');
 const { installHandler } = require('./graphql-handler');
 const routes = require('./routes');
+const seed = require('./seed');
 
 const app = express();
 app.use(morgan('tiny'));
@@ -29,10 +30,14 @@ installHandler(app);
 
 db.sequelize
     .sync({
+        // force: true,
         force: false,
     })
-    .then(() => {
+    .then(async () => {
         console.log('connect db success.');
+        // if (process.env.NODE_ENV !== 'production') {
+        //     await require('./seed')();
+        // }
 
         app.listen(config.get('port'), e => {
             if (!e) {

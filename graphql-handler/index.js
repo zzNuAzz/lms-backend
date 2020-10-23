@@ -24,6 +24,7 @@ const resolvers = {
         enrollCourse: mustBeStudent(users.enrollCourse),
         updateUserProfile: mustBeLogin(users.updateUserProfile),
         updateUserPassword: mustBeLogin(users.updateUserPassword),
+        uploadAvatar: mustBeLogin(users.uploadAvatar),
         updateCourseMember: mustBeTeacher(courses.updateCourseMember),
     },
 };

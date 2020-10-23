@@ -51,6 +51,7 @@ type UserCourseList {
     pageNumber: Int!
     totalPages: Int!
 }
+
 type userList {
     userList: [UserProfile!]!
     status: EnrollStatus!
@@ -58,6 +59,17 @@ type userList {
     pageNumber: Int!
     totalPages: Int!
 }
+
+type BooleanMessage {
+    success: Boolean!
+    message: String
+}
+
+# type File {
+#     filename: String!
+#     mimetype: String!
+#     encoding: String!
+# }
 
 # Top level declarations
 type Query {
@@ -89,11 +101,6 @@ type Query {
         pageNumber: Int = 0
         pageSize: Int = 10
     ): userList!
-}
-
-type BooleanMessage {
-    success: Boolean!
-    message: String
 }
 
 # Custom input type declarations
@@ -134,6 +141,8 @@ type Mutation {
         currentPassword: String!
         newPassword: String!
     ): BooleanMessage!
+    # user upload avatar
+    uploadAvatar(avatar: Upload!): BooleanMessage!
     # student enroll
     enrollCourse(courseId: Int!, description: String): BooleanMessage!
     # create course member (for teacher add user to course)
@@ -144,4 +153,5 @@ type Mutation {
         status: EnrollStatus!
         description: String
     ): BooleanMessage!
+    # singleUpload(file: Upload!): File!
 }

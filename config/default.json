@@ -8,5 +8,6 @@
     },
     "port": 3000,
     "jwt": "",
-    "bcrypt_salt": 10
+    "bcrypt_salt": 10,
+    "file-store-dir": "."
 }

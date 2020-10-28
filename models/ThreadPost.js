@@ -16,11 +16,15 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
         content: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false,
         },
         create_at: {
-            type: Sequelize.STRING,
+            type: Sequelize.DATE,
+            allowNull: false,
+        },
+        update_at: {
+            type: Sequelize.DATE,
             allowNull: false,
         },
     });

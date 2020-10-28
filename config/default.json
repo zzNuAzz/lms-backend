@@ -6,6 +6,7 @@
         "user": "",
         "password": ""
     },
+    "forceSyncDB": false,
     "port": 3000,
     "jwt": "",
     "bcrypt_salt": 10,

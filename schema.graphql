@@ -52,9 +52,26 @@ type UserCourseList {
     totalPages: Int!
 }
 
-type userList {
+type UserList {
     userList: [UserProfile!]!
     status: EnrollStatus!
+    totalRecords: Int!
+    pageNumber: Int!
+    totalPages: Int!
+}
+
+type Thread {
+    forumThreadId: Int!
+    # course: CourseDetails!
+    author: UserProfile!
+    title: String!
+    content: String!
+    createAt: String!
+    updateAt: String!
+}
+
+type ThreadList {
+    forumThreadList: [Thread!]!
     totalRecords: Int!
     pageNumber: Int!
     totalPages: Int!
@@ -65,11 +82,12 @@ type BooleanMessage {
     message: String
 }
 
-# type File {
-#     filename: String!
-#     mimetype: String!
-#     encoding: String!
-# }
+type InsertedMessage {
+    success: Boolean!
+    insertedId: Int
+    message: String
+}
+
 
 # Top level declarations
 type Query {
@@ -80,27 +98,15 @@ type Query {
     # check username before create account
     usernameAvailability(username: String!): Boolean!
     # get list course
-    courseList(
-        hostId: Int
-        pageNumber: Int = 0
-        pageSize: Int = 10
-    ): CourseList!
+    courseList(hostId: Int, pageNumber: Int = 0, pageSize: Int = 10): CourseList!
     # get course by Id
     course(courseId: Int!): CourseDetails
     # get courses  from a user
-    userCourseList(
-        userId: Int!
-        status: EnrollStatus = Accepted
-        pageNumber: Int = 0
-        pageSize: Int = 10
-    ): UserCourseList!
+    userCourseList(userId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): UserCourseList!
     # get users from a course
-    courseUserList(
-        courseId: Int!
-        status: EnrollStatus = Accepted
-        pageNumber: Int = 0
-        pageSize: Int = 10
-    ): userList!
+    courseUserList(courseId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): UserList!
+    # get threads in a course
+    threadList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): ThreadList!
 }
 
 # Custom input type declarations
@@ -123,7 +129,6 @@ input UserUpdateInput {
     address: String
     phone: String
     birthday: String
-    # pictureUrl: String
 }
 
 input PasswordUpdateInput {
@@ -137,21 +142,15 @@ type Mutation {
     # edit user info
     updateUserProfile(changes: UserUpdateInput!): UserProfile!
     # update password
-    updateUserPassword(
-        currentPassword: String!
-        newPassword: String!
-    ): BooleanMessage!
+    updateUserPassword(currentPassword: String!, newPassword: String!): BooleanMessage!
     # user upload avatar
     uploadAvatar(avatar: Upload!): BooleanMessage!
     # student enroll
     enrollCourse(courseId: Int!, description: String): BooleanMessage!
-    # create course member (for teacher add user to course)
-    createCourseMember(courseId: Int, userId: Int!): BooleanMessage!
     # update member enroll status (for teacher)
-    updateCourseMember(
-        courseMemberId: Int!
-        status: EnrollStatus!
-        description: String
-    ): BooleanMessage!
-    # singleUpload(file: Upload!): File!
+    updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
+    # create thread forum
+    createThread(courseId: Int!, title: String!, content: String!): InsertedMessage!
+    # edit thread details
+    editThread(threadId:Int! title: String content: String): BooleanMessage!
 }

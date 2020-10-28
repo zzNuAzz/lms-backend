@@ -1,6 +1,10 @@
 const clearJWToken = (req, res) => {
-    res.clearCookie('token' /*{ domain: process.env.COOKIE_DOMAIN }*/);
-    res.json({ status: 'ok' });
+    try {
+        res.clearCookie('token' /*{ domain: process.env.COOKIE_DOMAIN }*/);
+        res.json({ success: true });
+    } catch {
+        res.json({ success: false });
+    }
 };
 
 module.exports = clearJWToken;

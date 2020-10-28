@@ -17,19 +17,19 @@ module.exports = (sequelize, Sequelize) => {
         },
 
         content: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false,
         },
 
         create_at: {
-            type: Sequelize.STRING,
+            type: Sequelize.DATE,
             allowNull: false,
         },
         due_date: {
-            type: Sequelize.STRING,
+            type: Sequelize.DATE,
         },
         description: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
         },
     });
 

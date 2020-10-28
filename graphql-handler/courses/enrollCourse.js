@@ -19,7 +19,7 @@ const enrollCourse = async (_, args, { userCtx }) => {
         if (result) {
             // update
             if (result.status === 'Accepted') {
-                throw UserInputError('User already in course.');
+                throw new UserInputError('User already in course.');
             } else if (result.status === 'Pending') {
                 throw new UserInputError('User already sent enroll request.');
             }

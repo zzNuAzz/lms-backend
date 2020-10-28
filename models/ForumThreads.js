@@ -22,20 +22,29 @@ module.exports = (sequelize, Sequelize) => {
         },
 
         content: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false,
         },
-
         create_at: {
-            type: Sequelize.STRING,
+            type: Sequelize.DATE,
+            allowNull: false,
+        },
+        update_at: {
+            type: Sequelize.DATE,
             allowNull: false,
         },
     });
 
     ForumThreads.associate = models => {
+        ForumThreads.belongsTo(models.Users, {
+            foreignKey: 'author_id',
+            targetKey: 'user_id',
+            as: 'author',
+        });
         ForumThreads.belongsTo(models.Courses, {
             foreignKey: 'course_id',
             targetKey: 'course_id',
+            as: 'course',
         });
         ForumThreads.hasMany(models.ThreadPosts, {
             foreignKey: 'forum_thread_id',

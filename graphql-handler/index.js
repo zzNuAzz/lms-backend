@@ -1,11 +1,11 @@
 const { ApolloServer } = require('apollo-server-express');
 const fs = require('fs');
-const users = require('./users');
 const {
     permission: { mustBeLogin, mustBeTeacher, mustBeStudent },
 } = require('./users');
+const users = require('./users');
 const courses = require('./courses');
-
+const threads = require('./threads');
 const { getUser } = require('../controllers/users');
 
 //mapping graphql query with function
@@ -15,17 +15,23 @@ const resolvers = {
         userCourseList: users.getUserCourses,
         currentUser: users.resolveUser,
         usernameAvailability: users.checkUsername,
+
         courseList: courses.getCourseList,
         courseUserList: courses.getCourseUserList,
         course: courses.getCourse,
+        threadList: mustBeLogin(threads.getThread),
     },
     Mutation: {
         createUserAccount: users.createUser,
-        enrollCourse: mustBeStudent(users.enrollCourse),
         updateUserProfile: mustBeLogin(users.updateUserProfile),
         updateUserPassword: mustBeLogin(users.updateUserPassword),
         uploadAvatar: mustBeLogin(users.uploadAvatar),
+
+        enrollCourse: mustBeStudent(courses.enrollCourse),
         updateCourseMember: mustBeTeacher(courses.updateCourseMember),
+
+        createThread: mustBeLogin(threads.createThread),
+        editThread: mustBeLogin(threads.editThread),
     },
 };
 

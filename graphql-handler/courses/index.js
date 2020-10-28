@@ -4,4 +4,4 @@ module.exports.getCourseUserList = require('./getCourseUserList');
 
 module.exports.updateCourseMember = require('./updateCourseMember');
 
-module.exports.createCourseMember = require('./createCourseMember');
+module.exports.enrollCourse = require('./enrollCourse');

@@ -24,6 +24,7 @@ const sequelize = new Sequelize(name, user, password, {
         timestamps: false,
         freezeTableName: true,
     },
+    timezone: '+07:00',
     logging: false,
 });
 

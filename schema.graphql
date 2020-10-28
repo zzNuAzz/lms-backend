@@ -154,4 +154,7 @@ type Mutation {
         description: String
     ): BooleanMessage!
     # singleUpload(file: Upload!): File!
+
+    #create Course (only for teacher)
+    createCourse(name: String! description: String): BooleanMessage!
 }

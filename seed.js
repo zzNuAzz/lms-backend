@@ -30,7 +30,7 @@ const seed = async () => {
   await db.Users.create(user('8','username8','$2b$10$3yfHAhm0MfxZXFnVTkwsxOOL10lUiGP0h1pnfrVVms7cTjL1Cfysy','Student',NULL,NULL,NULL,NULL,NULL,NULL,NULL));
   await db.Users.create(user('9','username9','$2b$10$D1T4tELN2rsbnjX4TYduReTzBEFR9OKeHUo1eRytnqBF.2xqTlp0y','Student',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL));
   await db.Users.create(user('10','username10','$2b$10$04ncysEyTBu/AhJa0hg6bOltLOFhInHJAgscH730zpZOWVt2ybCk6','Teacher',NULL,NULL,NULL,NULL,NULL,NULL,NULL));
-  await db.Users.create(user('11','username11','$2b$10$EphtuMcOE/R8eqlTEAAZp.qNPl8nk2p.8.0Jdu52G7Z.vquucS2xO','Teacher','ABC','DFF',NULL,NULL,NULL,NULL,NULL));
+  await db.Users.create(user('11','username11','$2b$10$EphtuMcOE/R8eqlTEAAZp.qNPl8nk2p.8.0Jdu52G7˚Z.vquucS2xO','Teacher','ABC','DFF',NULL,NULL,NULL,NULL,NULL));
   
   await db.Courses.create(course('1', '10', 'Đồ họa máy tính', 'miêu tả môn đồ họa'));
   await db.Courses.create(course('2', '11', 'Quản lý dự án', NULL));

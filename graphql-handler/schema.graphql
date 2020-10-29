@@ -1,3 +1,4 @@
+scalar Date
 # Custom type declarations
 
 enum UserRole {
@@ -66,12 +67,28 @@ type Thread {
     author: UserProfile!
     title: String!
     content: String!
-    createAt: String!
-    updateAt: String!
+    createAt: Date!
+    updateAt: Date!
 }
 
 type ThreadList {
     forumThreadList: [Thread!]!
+    totalRecords: Int!
+    pageNumber: Int!
+    totalPages: Int!
+}
+
+type Document {
+    documentId: Int!
+    # course: CourseDetails!
+    author: UserProfile!
+    title: String!
+    description: String!
+    createAt: Date!
+    updateAt: Date!
+}
+type DocumentList {
+    documentList: [Document!]!
     totalRecords: Int!
     pageNumber: Int!
     totalPages: Int!
@@ -153,4 +170,6 @@ type Mutation {
     createThread(courseId: Int!, title: String!, content: String!): InsertedMessage!
     # edit thread details
     editThread(threadId:Int! title: String content: String): BooleanMessage!
+    # create document (for teacher)
+    createDocument(courseId:Int! title: String! description: String!): InsertedMessage! 
 }

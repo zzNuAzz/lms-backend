@@ -20,13 +20,12 @@ const editThread = async (_, args, { userCtx }) => {
         }
         if (title) {
             thread['title'] = title;
-            thread['update_at'] = new Date();
+            thread['update_at'] = Date.now();
         }
         if (content) {
             thread['content'] = content;
-            thread['update_at'] = new Date();
+            thread['update_at'] = Date.now();
         }
-        console.log(new Date().toLocaleString());
         await thread.save();
         return {
             success: true,

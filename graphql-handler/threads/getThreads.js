@@ -16,7 +16,7 @@ const getThread = async (_, args, { userCtx }) => {
     if (course == null) {
         throw new UserInputError('CourseId is invalid');
     }
-    if (role === 'Teacher' && course.hostId !== authorId) {
+    if (role === 'Teacher' && course['host_id'] !== authorId) {
         throw new AuthenticationError(
             'You does not have permission with this course!'
         );
@@ -47,6 +47,7 @@ const getThread = async (_, args, { userCtx }) => {
         nest: true,
         raw: true,
     });
+
     return camelCase({
         forumThreadList,
         totalRecords,

@@ -1,11 +1,14 @@
 const { ApolloServer } = require('apollo-server-express');
 const fs = require('fs');
+
+const ScalarDate = require('./ScalarDate');
 const {
     permission: { mustBeLogin, mustBeTeacher, mustBeStudent },
 } = require('./users');
 const users = require('./users');
 const courses = require('./courses');
 const threads = require('./threads');
+const documents = require('./documents');
 const { getUser } = require('../controllers/users');
 
 //mapping graphql query with function
@@ -32,12 +35,15 @@ const resolvers = {
 
         createThread: mustBeLogin(threads.createThread),
         editThread: mustBeLogin(threads.editThread),
+
+        createDocument: mustBeTeacher(documents.createDocument),
     },
+    Date: ScalarDate,
 };
 
 const server = new ApolloServer({
     resolvers,
-    typeDefs: fs.readFileSync(`${__dirname}/../schema.graphql`, 'utf-8'),
+    typeDefs: fs.readFileSync(`${__dirname}/schema.graphql`, 'utf-8'),
     formatError: error => {
         console.log(error);
         return error;

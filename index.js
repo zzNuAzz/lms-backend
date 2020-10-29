@@ -33,7 +33,7 @@ const forceSyncDB = config.get('forceSyncDB');
 db.sequelize
     .sync({
         force: forceSyncDB,
-        logging: console.log,
+        // logging: console.log,
     })
     .then(async () => {
         console.log('connect db success.');

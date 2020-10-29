@@ -5,45 +5,35 @@ const {
     AuthenticationError,
 } = require('apollo-server-express');
 
-const createThread = async (_, { courseId, title, content }, { userCtx }) => {
+const createDocument = async (_, args, { userCtx }) => {
+    const { courseId, title, description } = args;
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
-            user: { userId: authorId, role },
+            user: { userId: authorId },
         } = userCtx;
 
         const course = await db.Courses.findByPk(courseId, { raw: true });
         if (course == null) {
             throw new UserInputError('CourseId is invalid');
         }
-        if (role === 'Teacher' && course['host_id'] !== authorId) {
+        if (course['host_id'] !== authorId) {
             throw new AuthenticationError(
-                'You does not have permission with this course!'
+                'You does not have permission to create!'
             );
         }
-        if (role === 'Student') {
-            const filter = { userId: authorId, courseId, status: 'Accepted' };
-            const member = await db.CourseMembers.findOne({
-                where: snakeCase(filter),
-            });
-            if (member == null) {
-                throw new AuthenticationError(
-                    'You does not have permission with this course!'
-                );
-            }
-        }
 
-        const thread = await db.ForumThreads.create(
+        const document = await db.Documents.create(
             snakeCase({
                 courseId,
                 authorId,
                 title,
-                content,
+                description,
                 createAt: Date.now(),
                 updateAt: Date.now(),
             })
         );
-        const insertedId = camelCase(thread.toJSON()).forumThreadId;
+        const insertedId = camelCase(document.toJSON()).documentId;
         return {
             insertedId,
             success: true,
@@ -61,4 +51,4 @@ const createThread = async (_, { courseId, title, content }, { userCtx }) => {
         };
     }
 };
-module.exports = createThread;
+module.exports = createDocument;

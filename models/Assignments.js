@@ -22,11 +22,11 @@ module.exports = (sequelize, Sequelize) => {
         },
 
         create_at: {
-            type: Sequelize.DATE,
+            type: Sequelize.STRING,
             allowNull: false,
         },
         due_date: {
-            type: Sequelize.DATE,
+            type: Sequelize.STRING,
         },
         description: {
             type: Sequelize.TEXT,

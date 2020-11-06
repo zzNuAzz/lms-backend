@@ -5,26 +5,18 @@ const {
     AuthenticationError,
 } = require('apollo-server-express');
 
-const editPost = async (_, args, { userCtx }) => {
+const createCourse = async (_, { name, description }, { userCtx }) => {
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
-            user: { userId },
+            user: { userId: hostId },
         } = userCtx;
-        const { postId, content } = args;
-        const post = await db.ThreadPost.findByPk(postId);
-        if (post['author_id'] !== userId) {
-            throw new AuthenticationError(
-                "You don't have permission to edit on this post."
-            );
-        }
-        
-        if (content) {
-            post['content'] = content;
-            post['update_at'] = Date.now();
-        }
-        await post.save();
+
+        const course = await db.Courses.create(snakeCase({name, description, hostId}));
+
+        const insertedId = camelCase(course.toJSON()).courseId;
         return {
+            insertedId,
             success: true,
         };
     } catch (err) {
@@ -40,4 +32,4 @@ const editPost = async (_, args, { userCtx }) => {
         };
     }
 };
-module.exports = editPost;
+module.exports = createCourse;

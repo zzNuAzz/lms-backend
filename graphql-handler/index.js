@@ -9,6 +9,7 @@ const users = require('./users');
 const courses = require('./courses');
 const threads = require('./threads');
 const documents = require('./documents');
+const posts = require('./posts');
 const { getUser } = require('../controllers/users');
 
 //mapping graphql query with function
@@ -26,16 +27,20 @@ const resolvers = {
     },
     Mutation: {
         createUserAccount: users.createUser,
+        createCourse: mustBeTeacher(courses.createCourse),
+        enrollCourse: mustBeStudent(courses.enrollCourse),
+        updateCourseMember: mustBeTeacher(courses.updateCourseMember),
+        updateCourse: mustBeTeacher(courses.updateCourse),
         updateUserProfile: mustBeLogin(users.updateUserProfile),
         updateUserPassword: mustBeLogin(users.updateUserPassword),
         uploadAvatar: mustBeLogin(users.uploadAvatar),
 
-        enrollCourse: mustBeStudent(courses.enrollCourse),
-        updateCourseMember: mustBeTeacher(courses.updateCourseMember),
-
         createThread: mustBeLogin(threads.createThread),
         editThread: mustBeLogin(threads.editThread),
 
+        createPost: mustBeLogin(posts.createPost),
+        editPost: mustBeLogin(posts.editPost),
+        // getPost: mustBeLogin(posts.getPost),
         createDocument: mustBeTeacher(documents.createDocument),
     },
     Date: ScalarDate,

@@ -71,6 +71,15 @@ type Thread {
     updateAt: Date!
 }
 
+type Post {
+    postId: Int!
+    thread: Thread!
+    author: UserProfile!
+    content: String!
+    createAt: Date!
+    updateAt: Date!
+}
+
 type ThreadList {
     forumThreadList: [Thread!]!
     totalRecords: Int!
@@ -93,6 +102,7 @@ type DocumentList {
     pageNumber: Int!
     totalPages: Int!
 }
+
 
 type BooleanMessage {
     success: Boolean!
@@ -164,7 +174,14 @@ type Mutation {
     uploadAvatar(avatar: Upload!): BooleanMessage!
     # student enroll
     enrollCourse(courseId: Int!, description: String): BooleanMessage!
-    # update member enroll status (for teacher)
+    # update course details
+    updateCourse(courseId: Int!, description: String!): BooleanMessage!
+    # create course (for teacher)
+    createCourse(name: String! description: String!): InsertedMessage! 
+    # create post 
+    createPost(threadId: Int! content: String!): InsertedMessage!
+    #edit post
+    editPost(postId: Int! content: String!): BooleanMessage!
     updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
     # create thread forum
     createThread(courseId: Int!, title: String!, content: String!): InsertedMessage!

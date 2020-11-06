@@ -60,6 +60,51 @@ type userList {
     totalPages: Int!
 }
 
+<<<<<<< Updated upstream:schema.graphql
+=======
+type Thread {
+    forumThreadId: Int!
+    # course: CourseDetails!
+    author: UserProfile!
+    title: String!
+    content: String!
+    createAt: Date!
+    updateAt: Date!
+}
+
+type Post {
+    postId: Int!
+    thread: Thread!
+    author: UserProfile!
+    content: String!
+    createAt: Date!
+    updateAt: Date!
+}
+
+type ThreadList {
+    forumThreadList: [Thread!]!
+    totalRecords: Int!
+    pageNumber: Int!
+    totalPages: Int!
+}
+
+type Document {
+    documentId: Int!
+    # course: CourseDetails!
+    author: UserProfile!
+    title: String!
+    description: String!
+    createAt: Date!
+    updateAt: Date!
+}
+type DocumentList {
+    documentList: [Document!]!
+    totalRecords: Int!
+    pageNumber: Int!
+    totalPages: Int!
+}
+
+>>>>>>> Stashed changes:graphql-handler/schema.graphql
 type BooleanMessage {
     success: Boolean!
     message: String
@@ -148,6 +193,7 @@ type Mutation {
     # create course member (for teacher add user to course)
     createCourseMember(courseId: Int, userId: Int!): BooleanMessage!
     # update member enroll status (for teacher)
+<<<<<<< Updated upstream:schema.graphql
     updateCourseMember(
         courseMemberId: Int!
         status: EnrollStatus!
@@ -158,3 +204,21 @@ type Mutation {
     #create Course (only for teacher)
     createCourse(name: String! description: String): BooleanMessage!
 }
+=======
+    updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
+    # update course details
+    updateCourse(courseId: Int!, description: String!): BooleanMessage!
+    # create thread forum
+    createThread(courseId: Int!, title: String!, content: String!): InsertedMessage!
+    # edit thread details
+    editThread(threadId: Int! title: String content: String): BooleanMessage!
+    # create document (for teacher)
+    createDocument(courseId:Int! title: String! description: String!): InsertedMessage! 
+    # create course (for teacher)
+    createCourse(name: String! description: String!): InsertedMessage! 
+    # create post 
+    createPost(threadId: Int! content: String!): InsertedMessage!
+    #edit post
+    editPost(postId: Int! content: String!): BooleanMessage!
+}
+>>>>>>> Stashed changes:graphql-handler/schema.graphql

@@ -5,7 +5,13 @@ const {
     permission: { mustBeLogin, mustBeTeacher, mustBeStudent },
 } = require('./users');
 const courses = require('./courses');
+<<<<<<< Updated upstream
 
+=======
+const threads = require('./threads');
+const documents = require('./documents');
+const posts = require('./posts');
+>>>>>>> Stashed changes
 const { getUser } = require('../controllers/users');
 
 //mapping graphql query with function
@@ -26,7 +32,23 @@ const resolvers = {
         updateUserProfile: mustBeLogin(users.updateUserProfile),
         updateUserPassword: mustBeLogin(users.updateUserPassword),
         uploadAvatar: mustBeLogin(users.uploadAvatar),
+<<<<<<< Updated upstream
         updateCourseMember: mustBeTeacher(courses.updateCourseMember),
+=======
+        
+        createCourse: mustBeTeacher(courses.createCourse),
+        enrollCourse: mustBeStudent(courses.enrollCourse),
+        updateCourseMember: mustBeTeacher(courses.updateCourseMember),
+        updateCourse: mustBeTeacher(courses.updateCourse),
+
+        createThread: mustBeLogin(threads.createThread),
+        editThread: mustBeLogin(threads.editThread),
+
+        createPost: mustBeLogin(posts.createPost),
+        editPost: mustBeLogin(posts.editPost),
+        // getPost: mustBeLogin(posts.getPost),
+        createDocument: mustBeTeacher(documents.createDocument),
+>>>>>>> Stashed changes
     },
 };
 

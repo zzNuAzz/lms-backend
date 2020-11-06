@@ -1,4 +1,7 @@
-const { UserInputError } = require('apollo-server-express');
+const {
+    UserInputError,
+    AuthenticationError,
+} = require('apollo-server-express');
 const { snakeCase, camelCase } = require('change-case-object');
 const db = require('../../models');
 
@@ -9,6 +12,7 @@ const updateCourseMember = async (_, args, { userCtx }) => {
     } = userCtx;
 
     try {
+        if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const member = await db.CourseMembers.findOne({
             include: [{ model: db.Courses, as: 'course' }],
             where: snakeCase({ courseMemberId }),
@@ -16,7 +20,7 @@ const updateCourseMember = async (_, args, { userCtx }) => {
         });
 
         if (!member) {
-            throw new UserInputError('Member does not found.');
+            throw new UserInputError('Member does not exist.');
         }
         if (callerId !== member.course.host_id) {
             throw new UserInputError(
@@ -25,7 +29,10 @@ const updateCourseMember = async (_, args, { userCtx }) => {
         }
         member.update({ status, description });
     } catch (err) {
-        if (!(err instanceof UserInputError)) {
+        if (
+            !(err instanceof UserInputError) &&
+            !(err instanceof AuthenticationError)
+        ) {
             console.log(err);
         }
         return { success: false, message: err.message };

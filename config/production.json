@@ -6,8 +6,9 @@
         "user": "root",
         "password": "!@#qweASD"
     },
+    "forceSyncDB": false,
     "port": 3001,
-    "jwt": "jwtsecretforproductionlearningmanagentsystem",
+    "jwt": "jsonwebtokensecretlearningmanagentsystem",
     "bcrypt_salt": 10,
-    "file-store-dir": "/home/nua"
+    "file-store-dir": "/home/nua/lms-file-store"
 }

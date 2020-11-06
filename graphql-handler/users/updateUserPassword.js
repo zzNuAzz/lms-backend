@@ -2,6 +2,7 @@ const { snakeCase } = require('change-case-object');
 const bcrypt = require('bcrypt');
 const db = require('../../models');
 const config = require('config');
+const { AuthenticationError } = require('apollo-server-express');
 
 const SALT_ROUNDS = config.get('bcrypt_salt') || 10;
 const setUserPassword = async (userId, newPassword) => {

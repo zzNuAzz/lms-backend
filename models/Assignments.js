@@ -17,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
         },
 
         content: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false,
         },
 
@@ -29,7 +29,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
         },
         description: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
         },
     });
 

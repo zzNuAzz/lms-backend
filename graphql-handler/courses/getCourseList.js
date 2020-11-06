@@ -18,8 +18,7 @@ const getCourseList = async (_, arg, { userCtx }) => {
         nest: true,
         raw: true,
     });
-
-    console.log(courseList);
+    
     return camelCase({
         courseList,
         totalRecords,

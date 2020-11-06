@@ -21,13 +21,18 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
 
+        update_at: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+
         create_at: {
             type: Sequelize.STRING,
             allowNull: false,
         },
 
         description: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
         },
     });
 

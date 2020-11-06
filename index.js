@@ -28,15 +28,17 @@ app.use('/api/auth', routes.auth);
 //mount graphql
 installHandler(app);
 
+const forceSyncDB = config.get('forceSyncDB');
+
 db.sequelize
     .sync({
-        // force: true,
-        force: false,
+        force: forceSyncDB,
+        // logging: console.log,
     })
     .then(async () => {
         console.log('connect db success.');
-        if (process.env.NODE_ENV !== 'production') {
-            // await require('./seed')();
+        if (forceSyncDB) {
+            await require('./seed')();
         }
 
         app.listen(config.get('port'), e => {

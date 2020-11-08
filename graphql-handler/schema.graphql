@@ -180,8 +180,13 @@ type Mutation {
     createCourse(name: String! description: String!): InsertedMessage! 
     # create post 
     createPost(threadId: Int! content: String!): InsertedMessage!
-    #edit post
+    # edit post
     editPost(postId: Int! content: String!): BooleanMessage!
+    # create assignment 
+    createAssignment(courseId: Int! title: String! content: String! dueDate: Date!): InsertedMessage!
+    # edit assignment
+    editAssignment(courseId: Int! title: String! content: String! dueDate: Date!): BooleanMessage!
+    # update course member details
     updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
     # create thread forum
     createThread(courseId: Int!, title: String!, content: String!): InsertedMessage!

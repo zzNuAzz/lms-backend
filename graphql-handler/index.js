@@ -10,6 +10,7 @@ const courses = require('./courses');
 const threads = require('./threads');
 const documents = require('./documents');
 const posts = require('./posts');
+const assignment = require('./assignments');
 const { getUser } = require('../controllers/users');
 
 //mapping graphql query with function
@@ -37,6 +38,9 @@ const resolvers = {
 
         createThread: mustBeLogin(threads.createThread),
         editThread: mustBeLogin(threads.editThread),
+        
+        createAssignment: mustBeTeacher(assignment.createAssignment),
+        editAssignment: mustBeTeacher(assignment.editAssignment),
 
         createPost: mustBeLogin(posts.createPost),
         editPost: mustBeLogin(posts.editPost),

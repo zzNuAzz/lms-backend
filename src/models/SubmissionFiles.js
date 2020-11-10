@@ -19,9 +19,9 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
 
-        format: {
-            type: Sequelize.ENUM,
-            values: ['pdf', 'doc', 'docx', 'xlsx', 'png', 'jpg'],
+        mimetype: {
+            type: Sequelize.STRING,
+            // values: ['pdf', 'doc', 'docx', 'xlsx', 'png', 'jpg'],
             allowNull: false,
         },
     });

@@ -13,7 +13,7 @@ const editThread = async (_, args, { userCtx }) => {
         } = userCtx;
         const { threadId, title, content } = args;
         const thread = await db.ForumThreads.findByPk(threadId);
-        if (camelCase(thread.toJSON()).authorId !== userId) {
+        if (thread['author_id'] !== userId) {
             throw new AuthenticationError(
                 "You don't have permission to edit on this thread."
             );
@@ -27,9 +27,7 @@ const editThread = async (_, args, { userCtx }) => {
             thread['update_at'] = Date.now();
         }
         await thread.save();
-        return {
-            success: true,
-        };
+        return { success: true };
     } catch (err) {
         if (
             !(err instanceof UserInputError) &&

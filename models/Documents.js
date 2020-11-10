@@ -44,10 +44,12 @@ module.exports = (sequelize, Sequelize) => {
         Documents.belongsTo(models.Users, {
             foreignKey: 'author_id',
             targetKey: 'user_id',
+            as: 'author',
         });
         Documents.hasMany(models.DocumentFiles, {
             foreignKey: 'document_id',
             sourceKey: 'document_id',
+            as: 'files',
         });
     };
     return Documents;

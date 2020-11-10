@@ -1,4 +1,8 @@
 {
+    "redis":{
+        "host":"",
+        "port":6379
+    },
     "database": {
         "host": "",
         "port": "",
@@ -10,5 +14,6 @@
     "port": 3000,
     "jwt": "",
     "bcrypt_salt": 10,
-    "file-store-dir": "."
+    "file-store-dir": ".",
+    "file-store-tmp": "./tmp"
 }

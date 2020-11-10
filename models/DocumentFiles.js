@@ -10,24 +10,31 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-        name: {
+
+        filename: {
             type: Sequelize.STRING,
             allowNull: false,
         },
+
         url: {
             type: Sequelize.STRING,
             allowNull: false,
         },
 
-        format: {
-            type: Sequelize.ENUM,
-            values: ['pdf', 'doc', 'docx', 'xlsx', 'png', 'jpg'],
+        path: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+
+        mimetype: {
+            type: Sequelize.STRING,
+            // values: ['pdf', 'doc', 'docx', 'xlsx', 'png', 'jpg'],
             allowNull: false,
         },
     });
 
     DocumentFiles.associate = models => {
-      DocumentFiles.belongsTo(models.Documents, {
+        DocumentFiles.belongsTo(models.Documents, {
             foreignKey: 'document_id',
             targetKey: 'document_id',
         });

@@ -11,6 +11,7 @@ const threads = require('./threads');
 const documents = require('./documents');
 const posts = require('./posts');
 const uploadFile = require('./uploadFile');
+const assignment = require('./assignments');
 const { getUser } = require('../controllers/users');
 
 //mapping graphql query with function
@@ -24,6 +25,7 @@ const resolvers = {
         courseList: courses.getCourseList,
         courseUserList: courses.getCourseUserList,
         course: courses.getCourse,
+        
         threadList: mustBeLogin(threads.getThread),
         documentList: mustBeLogin(documents.getDocumentList),
     },
@@ -39,12 +41,16 @@ const resolvers = {
 
         createThread: mustBeLogin(threads.createThread),
         editThread: mustBeLogin(threads.editThread),
+        
+        createAssignment: mustBeTeacher(assignment.createAssignment),
+        editAssignment: mustBeTeacher(assignment.editAssignment),
 
         createPost: mustBeLogin(posts.createPost),
         editPost: mustBeLogin(posts.editPost),
         // getPost: mustBeLogin(posts.getPost),
         createDocument: mustBeTeacher(documents.createDocument),
         editDocument: mustBeTeacher(documents.editDocument),
+
         uploadFileSingle: mustBeLogin(uploadFile.single),
         uploadFileMultiple: mustBeLogin(uploadFile.multiple),
     },

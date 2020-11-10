@@ -1,4 +1,4 @@
-const db = require('./models');
+const db = require('./src/models');
 
 const NULL = null;
 const user = (...args) => {
@@ -74,8 +74,5 @@ const seed = async () => {
   await threads('11', '1', '3', 'tiêu đề 11', 'nội dung cho 11', '1603957918681', '1603957918681');
   await threads('12', '3', '2', 'tiêu đề 12', 'nội dung cho 12', '1603957918686', '1603957918686');
   await threads('13', '3', '2', 'tiêu đề 13', 'nội dung cho 13', '1603957918689', '1603957918689');
-
-
-
 }
 module.exports = seed;

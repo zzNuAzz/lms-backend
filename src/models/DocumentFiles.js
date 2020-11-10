@@ -28,7 +28,7 @@ module.exports = (sequelize, Sequelize) => {
 
         mimetype: {
             type: Sequelize.STRING,
-            // values: ['pdf', 'doc', 'docx', 'xlsx', 'png', 'jpg'],
+            // values: [],
             allowNull: false,
         },
     });

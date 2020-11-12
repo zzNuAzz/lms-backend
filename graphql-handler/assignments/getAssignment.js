@@ -12,17 +12,17 @@ const getAssignment = async (_, args, { userCtx }) => {
         user: { userId: hostId, role },
     } = userCtx;
 
-    const assignment = await db.Assignments.findByPk(couseId, { raw: true });
-    if (assignment == null) {
-        throw new UserInputError('AssignmentId is invalid');
+    const course = await db.Courses.findByPk(couseId, { raw: true });
+    if (course == null) {
+        throw new UserInputError('CourseId is invalid');
     }
-    if (role === 'Teacher' && assignment['host_id'] !== hostId) {
+    if (role === 'Teacher' && course['host_id'] !== hostId) {
         throw new AuthenticationError(
-            'You does not have permission with this post!'
+            'You does not have permission with this course!'
         );
     }
     if (role === 'Student') {
-        const filter = { userId: hostId, threadId, status: 'Accepted' };
+        const filter = { userId, threadId, status: 'Accepted' };
         const member = await db.CourseMembers.findOne({
             where: snakeCase(filter),
         });
@@ -33,7 +33,7 @@ const getAssignment = async (_, args, { userCtx }) => {
         }
     }
     const totalRecords = await db.Assignments.count({
-        where: snakeCase({ assignmentId }),
+        where: snakeCase({ courseId }),
     });
     const assignmentList = await db.Assignments.findAll({
         limit: pageSize,

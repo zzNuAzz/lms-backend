@@ -22,7 +22,7 @@ const getAssignment = async (_, args, { userCtx }) => {
         );
     }
     if (role === 'Student') {
-        const filter = { userId, threadId, status: 'Accepted' };
+        const filter = { userId, courseId, status: 'Accepted' };
         const member = await db.CourseMembers.findOne({
             where: snakeCase(filter),
         });

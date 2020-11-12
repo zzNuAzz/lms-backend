@@ -63,7 +63,6 @@ type UserList {
 
 type Thread {
     forumThreadId: Int!
-    # course: CourseDetails!
     author: UserProfile!
     title: String!
     content: String!
@@ -79,6 +78,7 @@ type Post {
     createAt: Date!
     updateAt: Date!
 }
+
 
 type ThreadList {
     forumThreadList: [Thread!]!
@@ -103,6 +103,29 @@ type DocumentList {
     totalPages: Int!
 }
 
+type PostList {
+    postList: [Post!]!
+    totalRecords: Int!
+    pageNumber: Int!
+    totalPages: Int!
+}
+
+type Assignment {
+    assignmentId: Int!
+    course: CourseDetails!
+    title: String!
+    author: UserProfile!
+    content: String!
+    createAt: Date!
+    dueDate: Date!
+}
+
+type AssignmentList {
+    assignmentList: [Assignment!]!
+    totalRecords: Int!
+    pageNumber: Int!
+    totalPages: Int!
+}
 
 type BooleanMessage {
     success: Boolean!
@@ -134,6 +157,10 @@ type Query {
     courseUserList(courseId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): UserList!
     # get threads in a course
     threadList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): ThreadList!
+    # get posts in a thread
+    postList(threadId: Int!, pageNumber: Int = 0, pageSize: Int = 10): PostList!
+    # get assignments in a course
+    assignmentList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): AssignmentList!
 }
 
 # Custom input type declarations

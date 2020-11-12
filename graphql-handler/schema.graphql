@@ -185,7 +185,7 @@ type Mutation {
     # create assignment 
     createAssignment(courseId: Int! title: String! content: String! dueDate: Date!): InsertedMessage!
     # edit assignment
-    editAssignment(courseId: Int! title: String! content: String! dueDate: Date!): BooleanMessage!
+    editAssignment(assignmentId: Int! title: String! content: String! dueDate: Date!): BooleanMessage!
     # update course member details
     updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
     # create thread forum

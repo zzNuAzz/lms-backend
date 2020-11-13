@@ -4,14 +4,15 @@ const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
-
-const createAssignment = async (_, { courseId, title, content, dueDate }, { userCtx }) => {
+const helps = require('../../helps');
+const createAssignment = async (_, args, { userCtx }) => {
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
             user: { userId: hostId, role },
         } = userCtx;
 
+        const { courseId, title, content, dueDate, files } = args.assignment;
         const course = await db.Courses.findByPk(courseId, { raw: true });
         if (course == null) {
             throw new UserInputError('CourseId does not exist');
@@ -21,19 +22,26 @@ const createAssignment = async (_, { courseId, title, content, dueDate }, { user
                 'You does not have permission with this course!'
             );
         }
-
+        const assignmentFiles = await helps.saveFileMultiple(files, 'assignment');
         const assignment = await db.Assignments.create(
             snakeCase({
                 courseId,
                 hostId,
                 title,
                 content,
-                createAt: Date.now(),
                 dueDate,
+                createAt: Date.now(),
+                updateAt: Date.now(),
             })
         );
-        
+
         const insertedId = camelCase(assignment.toJSON()).assignmentId;
+        await db.AssignmentFiles.bulkCreate(
+            assignmentFiles.map(file => {
+                file['assignment_id'] = insertedId;
+                return file;
+            })
+        );
         return {
             insertedId,
             success: true,

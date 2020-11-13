@@ -216,6 +216,14 @@ input DocumentInput {
     files: [File!]! = {files: []}
 }
 
+input AssignmentInput {
+    courseId: Int! 
+    title: String! 
+    content: String! 
+    dueDate: Date
+    files: [File!]! = {files: []}
+}
+
 type Mutation {
     # create account, default Student type
     createUserAccount(user: UserAccountInput!): UserProfile!
@@ -236,7 +244,7 @@ type Mutation {
     # edit post
     editPost(postId: Int! content: String!): BooleanMessage!
     # create assignment 
-    createAssignment(courseId: Int! title: String! content: String! dueDate: Date!): InsertedMessage!
+    createAssignment(assignment: AssignmentInput!): InsertedMessage!
     # edit assignment
     editAssignment(assignmentId: Int! title: String! content: String! dueDate: Date!): BooleanMessage!
     # update course member details

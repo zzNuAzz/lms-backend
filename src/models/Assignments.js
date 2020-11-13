@@ -25,9 +25,16 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
+
+        update_at: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+
         due_date: {
             type: Sequelize.STRING,
         },
+        
         description: {
             type: Sequelize.TEXT,
         },

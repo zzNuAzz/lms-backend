@@ -15,14 +15,17 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
+        
         content: {
             type: Sequelize.TEXT,
             allowNull: false,
         },
+
         create_at: {
             type: Sequelize.STRING,
             allowNull: false,
         },
+
         update_at: {
             type: Sequelize.STRING,
             allowNull: false,

@@ -42,7 +42,7 @@ const getAssignment = async (_, args, { userCtx }) => {
             { model: db.Users, as: 'author' },
             // { model: db.Courses, as: 'course' },
         ],
-        where: snakeCase({ assignmentId }),
+        where: snakeCase({ courseId }),
         order: [['update_at', 'DESC']],
         nest: true,
         raw: true,

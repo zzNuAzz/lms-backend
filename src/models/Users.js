@@ -17,6 +17,7 @@ module.exports = (sequelize, Sequelize) => {
         role: {
             type: Sequelize.ENUM,
             values: ['Teacher', 'Student'],
+            allowNull: false,
             defaultValue: 'Student',
         },
 
@@ -49,6 +50,8 @@ module.exports = (sequelize, Sequelize) => {
         },
         picture_url: {
             type: Sequelize.STRING,
+            defaultValue: '/file/0.jpg',
+            allowNull: false,
         },
     });
 

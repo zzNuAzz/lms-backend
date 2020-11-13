@@ -93,9 +93,13 @@ type Document {
     author: UserProfile!
     title: String!
     description: String!
+    files: [DocumentFile!]!
     createAt: Date!
     updateAt: Date!
 }
+
+
+
 type DocumentList {
     documentList: [Document!]!
     totalRecords: Int!
@@ -138,6 +142,18 @@ type InsertedMessage {
     message: String
 }
 
+type DocumentFile {
+    documentFileId: Int!
+    name: String!
+    url: String!
+    mimetype: String!
+}
+
+type FileUpload {
+    uuid: String!
+    filename: String!
+    mimetype: String!        
+}
 
 # Top level declarations
 type Query {
@@ -161,6 +177,8 @@ type Query {
     postList(threadId: Int!, pageNumber: Int = 0, pageSize: Int = 10): PostList!
     # get assignments in a course
     assignmentList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): AssignmentList!
+    #get list document in a course
+    documentList(courseId: Int!, pageNumber:Int = 0, pageSize: Int = 10): DocumentList!
 }
 
 # Custom input type declarations
@@ -185,9 +203,17 @@ input UserUpdateInput {
     birthday: String
 }
 
-input PasswordUpdateInput {
-    currentPassword: String!
-    newPassword: String!
+input File {
+    uuid: String!
+    filename: String!
+    mimetype: String!      
+}
+
+input DocumentInput {
+    courseId:Int! 
+    title: String! 
+    description: String!
+    files: [File!]! = {files: []}
 }
 
 type Mutation {
@@ -220,5 +246,10 @@ type Mutation {
     # edit thread details
     editThread(threadId:Int! title: String content: String): BooleanMessage!
     # create document (for teacher)
-    createDocument(courseId:Int! title: String! description: String!): InsertedMessage! 
+    createDocument(document: DocumentInput!): InsertedMessage! 
+    # edit document content (for teacher)
+    editDocument(documentId: Int! title: String description: String): BooleanMessage!
+    # file upload
+    uploadFileSingle(file: Upload!): FileUpload!
+    uploadFileMultiple(files: [Upload!]!): [FileUpload!]!
 }

@@ -1,7 +1,7 @@
 const { ApolloServer } = require('apollo-server-express');
 const fs = require('fs');
 
-const ScalarDate = require('./ScalarDate');
+const ScalarDate = require('../graphql/ScalarDate');
 const {
     permission: { mustBeLogin, mustBeTeacher, mustBeStudent },
 } = require('./users');
@@ -10,6 +10,7 @@ const courses = require('./courses');
 const threads = require('./threads');
 const documents = require('./documents');
 const posts = require('./posts');
+const uploadFile = require('./uploadFile');
 const assignment = require('./assignments');
 const { getUser } = require('../controllers/users');
 
@@ -24,7 +25,9 @@ const resolvers = {
         courseList: courses.getCourseList,
         courseUserList: courses.getCourseUserList,
         course: courses.getCourse,
+        
         threadList: mustBeLogin(threads.getThread),
+        documentList: mustBeLogin(documents.getDocumentList),
     },
     Mutation: {
         createUserAccount: users.createUser,
@@ -46,13 +49,20 @@ const resolvers = {
         editPost: mustBeLogin(posts.editPost),
         // getPost: mustBeLogin(posts.getPost),
         createDocument: mustBeTeacher(documents.createDocument),
+        editDocument: mustBeTeacher(documents.editDocument),
+
+        uploadFileSingle: mustBeLogin(uploadFile.single),
+        uploadFileMultiple: mustBeLogin(uploadFile.multiple),
     },
     Date: ScalarDate,
 };
 
 const server = new ApolloServer({
     resolvers,
-    typeDefs: fs.readFileSync(`${__dirname}/schema.graphql`, 'utf-8'),
+    typeDefs: fs.readFileSync(
+        `${__dirname}/../graphql/schema.graphql`,
+        'utf-8'
+    ),
     formatError: error => {
         console.log(error);
         return error;

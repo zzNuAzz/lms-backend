@@ -12,19 +12,19 @@ const editAssignment = async (_, args, { userCtx }) => {
             user: { userId },
         } = userCtx;
         const { assignmentId, title, content, dueDate } = args;
-        const post = await db.Assignments.findByPk(assignmentId);
-        if (post['author_id'] !== userId) {
+        const assignment = await db.Assignments.findByPk(assignmentId);
+        if (assignment['author_id'] !== userId) {
             throw new AuthenticationError(
-                "You don't have permission to edit on this post."
+                "You don't have permission to edit on this assignment."
             );
         }
         
         if (content || title) {
-            post['content'] = content;
-            post['title'] = title;
-            post['due_date'] = dueDate;
+            assignment['content'] = content;
+            assignment['title'] = title;
+            assignment['due_date'] = dueDate;
         }
-        await post.save();
+        await assignment.save();
         return {
             success: true,
         };

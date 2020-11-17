@@ -3,7 +3,7 @@ const JWT_SECRET = require('config').get('jwt');
 
 const generateJWT = (req, res) => {
     if (!JWT_SECRET) {
-        res.status(500).send('Missing JWT_SECRET. Refusing to authenticate.');
+        res.send({code:500, error: 'Missing JWT_SECRET. Refusing to authenticate.'});
         return;
     }
     try {
@@ -16,10 +16,10 @@ const generateJWT = (req, res) => {
         res.cookie('token', token, {
             httpOnly: true,
         });
-        res.send(credentials);
+        res.send({ code: 200, credentials });
     } catch (error) {
         console.log(error);
-        res.status(403).send({ code: 403, message: 'Invalid credentials.' });
+        res.send({ code: 403, message: 'Invalid credentials.' });
     }
 };
 

@@ -6,7 +6,7 @@ const { snakeCase, camelCase } = require('change-case-object');
 const verifyUser = async (req, res, next) => {
     const { username, password } = req.body;
     if (!username || !password) {
-        res.status(400).send({
+        res.send({
             code: 400,
             error: 'Authenticate failed!!!',
             message: 'Missing username or password.',
@@ -17,7 +17,7 @@ const verifyUser = async (req, res, next) => {
     const result = await db.Users.findOne({ where: { username }, raw: true });
 
     if (!result) {
-        res.status(400).send({
+        res.send({
             code: 400,
             error: 'Authenticate failed!!!',
             message: 'Username or password does not correct.',
@@ -30,8 +30,8 @@ const verifyUser = async (req, res, next) => {
         .compare(password, storePassword)
         .then(check => {
             if (check === false) {
-                res.status(401).send({
-                    status: 401,
+                res.send({
+                    code: 401,
                     error: 'Authenticate failed!!!',
                     message: 'Username or password does not correct.',
                 });
@@ -44,7 +44,7 @@ const verifyUser = async (req, res, next) => {
             next();
         })
         .catch(err => {
-            res.status(500).send({ error: err });
+            res.send({code:500, error: err });
         });
 };
 module.exports = verifyUser;

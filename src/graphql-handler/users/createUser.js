@@ -33,7 +33,7 @@ const createUser = async (_, { user: userInput }) => {
     await validateUsernameAndPassword(userInput);
 
     const user = await db.Users.create({
-        ...userInput,
+        ...snakeCase(userInput),
         password: await bcrypt.hash(userInput.password, SALT_ROUNDS),
     });
 

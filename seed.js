@@ -27,18 +27,18 @@ const threads = (...args) => {
 
 const seed = async () => {
 
-  await user('1','username1','$2b$10$vtlA5IiGMWYE1.BZW4nthe27b1wlawLiLmt7AmjN79GPYjs9Yw9N6','Student','first 1','last 1',NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('2','username2','$2b$10$LdsYxRBtfbgpTzgDKf4ILulIwr09iJqapqJzVY8qcRRA/XV7z5o7W','Student','first 2','last 2',NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('3','username3','$2b$10$UBNataVcGQ83s.GSg2olU.PnTClaO7csL.TgxMWRVj2W.w.N/U5ae','Student',NULL,NULL,'phone 3',NULL,NULL,NULL,"/file/0.jpg");
-  await user('4','username4','$2b$10$SGWvfHfcRtBKDnJ/zZYdee43m5XuzprF1jgSSkDvyOwCcZkN6pAhC','Student',NULL,NULL,NULL,'address 4',NULL,NULL,"/file/0.jpg");
-  await user('5','username5','$2b$10$mMK2Vxj0EaNF2tpG5IWGi.06Er9.XaFqwED3OoP6g9m7Szf0Bj37C','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('6','username6','$2b$10$P57DrkdhtNvR9Rkpr5hqv.rgcuGlHEFqokTEYJEphW3bsQjdaoWji','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('7','username7','$2b$10$aZkdZDpDFMGSoEnqEGY6ZOVymJtcc4ywc64O3qu3wEXiYb9Xzc70q','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('8','username8','$2b$10$3yfHAhm0MfxZXFnVTkwsxOOL10lUiGP0h1pnfrVVms7cTjL1Cfysy','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('9','username9','$2b$10$D1T4tELN2rsbnjX4TYduReTzBEFR9OKeHUo1eRytnqBF.2xqTlp0y','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('10','username10','$2b$10$8YORPRDtKN7vHeXaGiCpOeNn.nUZu0ITcb8kyB4pmc/jpooOkcYgK','Teacher',NULL,NULL,NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('11','username11','$2b$10$04ncysEyTBu/AhJa0hg6bOltLOFhInHJAgscH730zpZOWVt2ybCk6','Teacher',NULL,NULL,NULL,NULL,NULL,NULL,"/file/0.jpg");
-  await user('12','username12','$2b$10$EphtuMcOE/R8eqlTEAAZp.qNPl8nk2p.8.0Jdu52G7Z.vquucS2xO','Teacher','ABC','DFF',NULL,NULL,NULL,NULL,"/file/0.jpg");
+  await user('1','username1','$2b$10$vtlA5IiGMWYE1.BZW4nthe27b1wlawLiLmt7AmjN79GPYjs9Yw9N6','Student','first 1','last 1',NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('2','username2','$2b$10$LdsYxRBtfbgpTzgDKf4ILulIwr09iJqapqJzVY8qcRRA/XV7z5o7W','Student','first 2','last 2',NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('3','username3','$2b$10$UBNataVcGQ83s.GSg2olU.PnTClaO7csL.TgxMWRVj2W.w.N/U5ae','Student',NULL,NULL,'phone 3',NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('4','username4','$2b$10$SGWvfHfcRtBKDnJ/zZYdee43m5XuzprF1jgSSkDvyOwCcZkN6pAhC','Student',NULL,NULL,NULL,'address 4',NULL,NULL,"/files/avatar/0.png");
+  await user('5','username5','$2b$10$mMK2Vxj0EaNF2tpG5IWGi.06Er9.XaFqwED3OoP6g9m7Szf0Bj37C','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('6','username6','$2b$10$P57DrkdhtNvR9Rkpr5hqv.rgcuGlHEFqokTEYJEphW3bsQjdaoWji','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('7','username7','$2b$10$aZkdZDpDFMGSoEnqEGY6ZOVymJtcc4ywc64O3qu3wEXiYb9Xzc70q','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('8','username8','$2b$10$3yfHAhm0MfxZXFnVTkwsxOOL10lUiGP0h1pnfrVVms7cTjL1Cfysy','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('9','username9','$2b$10$D1T4tELN2rsbnjX4TYduReTzBEFR9OKeHUo1eRytnqBF.2xqTlp0y','Student',NULL,NULL,NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('10','username10','$2b$10$8YORPRDtKN7vHeXaGiCpOeNn.nUZu0ITcb8kyB4pmc/jpooOkcYgK','Teacher',NULL,NULL,NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('11','username11','$2b$10$04ncysEyTBu/AhJa0hg6bOltLOFhInHJAgscH730zpZOWVt2ybCk6','Teacher',NULL,NULL,NULL,NULL,NULL,NULL,"/files/avatar/0.png");
+  await user('12','username12','$2b$10$EphtuMcOE/R8eqlTEAAZp.qNPl8nk2p.8.0Jdu52G7Z.vquucS2xO','Teacher','ABC','DFF',NULL,NULL,NULL,NULL,"/files/avatar/0.png");
 
   await course('1', '10', 'Đồ họa máy tính', 'miêu tả môn đồ họa');
   await course('2', '11', 'Quản lý dự án', NULL);

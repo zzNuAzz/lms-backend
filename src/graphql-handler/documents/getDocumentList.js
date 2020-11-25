@@ -1,9 +1,10 @@
-const db = require('../../models');
 const { snakeCase, camelCase } = require('change-case-object');
 const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
+const db = require('../../models');
+const { parseObject } = require('../../helps');
 
 const getDocumentList = async (_, args, { userCtx }) => {
     const { courseId, pageNumber, pageSize } = args;
@@ -16,14 +17,13 @@ const getDocumentList = async (_, args, { userCtx }) => {
     const totalRecords = await db.Documents.count({
         where: snakeCase({ courseId }),
     });
-    const documentList = await db.Documents.findAll({
+    const _documentList = await db.Documents.findAll({
         limit: pageSize,
         offset: pageNumber * pageSize,
-        include: [{ model: db.Users, as: 'author' }],
+        include: ['author', 'files'],
         where: snakeCase({ courseId }),
-        nest: true,
-        raw: true,
     });
+    const documentList = parseObject(_documentList);
     return camelCase({
         documentList,
         totalRecords,

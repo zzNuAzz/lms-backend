@@ -10,12 +10,14 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-
+        host_id: {
+            type: Sequelize.INTEGER,
+            allowNull: false,
+        },
         title: {
             type: Sequelize.STRING,
             allowNull: false,
         },
-
         content: {
             type: Sequelize.TEXT,
             allowNull: false,
@@ -34,10 +36,6 @@ module.exports = (sequelize, Sequelize) => {
         due_date: {
             type: Sequelize.STRING,
         },
-        
-        description: {
-            type: Sequelize.TEXT,
-        },
     });
 
     Assignments.associate = models => {
@@ -45,6 +43,11 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'course_id',
             targetKey: 'course_id',
             as: "course"
+        });
+        Assignments.belongsTo(models.Users, {
+            foreignKey: 'host_id',
+            targetKey: 'user_id',
+            as: "author"
         });
         Assignments.hasMany(models.AssignmentFiles, {
             foreignKey: 'assignment_id',
@@ -55,6 +58,7 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'assignment_id',
             sourceKey: 'assignment_id',
         });
+
     };
     return Assignments;
 };

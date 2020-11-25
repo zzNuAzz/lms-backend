@@ -128,7 +128,7 @@ type Assignment {
     content: String!
     files: [AssignmentFile!]!
     createAt: Date!
-    dueDate: Date!
+    dueDate: Date
 }
 
 type AssignmentFile {

@@ -99,6 +99,12 @@ type Document {
 }
 
 
+type DocumentFile {
+    documentFileId: Int!
+    filename: String!
+    url: String!
+    mimetype: String!
+}
 
 type DocumentList {
     documentList: [Document!]!
@@ -120,8 +126,16 @@ type Assignment {
     title: String!
     author: UserProfile!
     content: String!
+    files: [AssignmentFile!]!
     createAt: Date!
     dueDate: Date!
+}
+
+type AssignmentFile {
+    assignmentFileId: Int!
+    filename: String!
+    url: String!
+    mimetype: String!
 }
 
 type AssignmentList {
@@ -142,12 +156,7 @@ type InsertedMessage {
     message: String
 }
 
-type DocumentFile {
-    documentFileId: Int!
-    name: String!
-    url: String!
-    mimetype: String!
-}
+
 
 type FileUpload {
     uuid: String!

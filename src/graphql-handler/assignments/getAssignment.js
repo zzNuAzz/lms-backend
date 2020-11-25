@@ -1,18 +1,19 @@
-const db = require('../../models');
 const { snakeCase, camelCase } = require('change-case-object');
 const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
+const db = require('../../models');
+const { parseObject } = require('../../helps');
 
-const getAssignment = async (_, args, { userCtx }) => {
-    const { couseId, pageNumber, pageSize } = args;
+const getAssignmentList = async (_, args, { userCtx }) => {
+    const { courseId, pageNumber, pageSize } = args;
     if (userCtx.error) throw new AuthenticationError(userCtx.error);
     const {
         user: { userId: hostId, role },
     } = userCtx;
 
-    const course = await db.Courses.findByPk(couseId, { raw: true });
+    const course = await db.Courses.findByPk(courseId, { raw: true });
     if (course == null) {
         throw new UserInputError('CourseId is invalid');
     }
@@ -35,19 +36,14 @@ const getAssignment = async (_, args, { userCtx }) => {
     const totalRecords = await db.Assignments.count({
         where: snakeCase({ courseId }),
     });
-    const assignmentList = await db.Assignments.findAll({
+    const _assignmentList = await db.Assignments.findAll({
         limit: pageSize,
         offset: pageNumber * pageSize,
-        include: [
-            { model: db.Users, as: 'author' },
-            // { model: db.Courses, as: 'course' },
-        ],
         where: snakeCase({ courseId }),
+        include: ['files', { association: 'course', include: ['host'] }],
         order: [['update_at', 'DESC']],
-        nest: true,
-        raw: true,
     });
-
+    const assignmentList = parseObject(_assignmentList);
     return camelCase({
         assignmentList,
         totalRecords,
@@ -55,4 +51,4 @@ const getAssignment = async (_, args, { userCtx }) => {
         totalPages: Math.ceil(totalRecords / pageSize),
     });
 };
-module.exports = getAssignment;
+module.exports = getAssignmentList;

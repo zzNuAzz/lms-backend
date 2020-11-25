@@ -25,9 +25,12 @@ const resolvers = {
         courseList: courses.getCourseList,
         courseUserList: courses.getCourseUserList,
         course: courses.getCourse,
-        
+
         threadList: mustBeLogin(threads.getThread),
+
         documentList: mustBeLogin(documents.getDocumentList),
+
+        assignmentList: mustBeLogin(assignment.getAssignmentList),
     },
     Mutation: {
         createUserAccount: users.createUser,
@@ -41,13 +44,14 @@ const resolvers = {
 
         createThread: mustBeLogin(threads.createThread),
         editThread: mustBeLogin(threads.editThread),
-        
+
         createAssignment: mustBeTeacher(assignment.createAssignment),
         editAssignment: mustBeTeacher(assignment.editAssignment),
 
         createPost: mustBeLogin(posts.createPost),
         editPost: mustBeLogin(posts.editPost),
         // getPost: mustBeLogin(posts.getPost),
+        
         createDocument: mustBeTeacher(documents.createDocument),
         editDocument: mustBeTeacher(documents.editDocument),
 

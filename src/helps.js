@@ -4,6 +4,7 @@ const config = require('config');
 const { v4: uuidv4 } = require('uuid');
 const redisClient = require('./redis');
 const { UserInputError } = require('apollo-server-express');
+const { Instance } = require('sequelize');
 
 const normalizeFileName = str =>
     str
@@ -100,3 +101,5 @@ module.exports.saveFileMultiple = (files,dest) => {
         })}).catch(err => reject(err))
     })));
 }
+
+module.exports.parseObject = instance => JSON.parse(JSON.stringify(instance))

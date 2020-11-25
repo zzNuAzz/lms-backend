@@ -4,17 +4,20 @@ const db = require('../../models');
 
 const uploadAvatar = async (_, { avatar }, { userCtx }) => {
     if (userCtx.error) throw userCtx.error;
+    
     const {
         user: { userId },
     } = userCtx;
+    console.log(userId)
     try {
-        const { url } = await helps.saveFile(avatar, 'avatar', userId);
+        const { url } = await helps.saveAvatar(avatar, 'avatar', userId);
         await db.Users.update(
             snakeCase({ pictureUrl: url }),
             snakeCase({ where: { userId } })
         );
         return { success: true };
     } catch (err) {
+        console.log(err)
         return {
             success: false,
             message: err.message,

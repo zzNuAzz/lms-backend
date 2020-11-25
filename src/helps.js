@@ -13,7 +13,7 @@ const normalizeFileName = str =>
         .replace(/[đ|\u00f0]/g, 'd')
         .replace(/[\u0300-\u036f]/g, '');
 
-module.exports.saveFile = (file, dir, name) => {
+module.exports.saveAvatar = (file, dir, name) => {
     return file.then(file => {
         const { createReadStream, filename, mimetype } = file;
         const saveName = name

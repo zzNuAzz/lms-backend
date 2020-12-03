@@ -15,6 +15,7 @@ const generateJWT = (req, res) => {
         const token = jwt.sign(credentials, JWT_SECRET);
         res.cookie('token', token, {
             httpOnly: true,
+            maxAge: 1000 * 60 * 60 * 24,
         });
         res.send({ code: 200, credentials });
     } catch (error) {

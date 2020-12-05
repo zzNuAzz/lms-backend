@@ -60,10 +60,10 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'user_id',
             sourceKey: 'user_id',
         });
-        Users.hasMany(models.ForumThreads, {
-            foreignKey: 'author_id',
-            sourceKey: 'user_id',
-        });
+        // Users.hasMany(models.ForumThreads, {
+        //     foreignKey: 'author_id',
+        //     sourceKey: 'user_id',
+        // });
         // Users.hasMany(models.ThreadPosts, {
         //     foreignKey: 'author_id',
         //     sourceKey: 'user_id',

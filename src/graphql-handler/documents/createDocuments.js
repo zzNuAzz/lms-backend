@@ -1,5 +1,4 @@
 const { snakeCase, camelCase } = require('change-case-object');
-const path = require('path');
 const {
     UserInputError,
     AuthenticationError,
@@ -28,7 +27,6 @@ const createDocument = async (_, args, { userCtx }) => {
         const document = await db.Documents.create(
             snakeCase({
                 courseId,
-                authorId,
                 title,
                 description,
                 createAt: Date.now(),

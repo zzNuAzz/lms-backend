@@ -67,6 +67,7 @@ type Thread {
     title: String!
     content: String!
     tags: String
+    postCount: Int
     createAt: Date!
     updateAt: Date!
 }
@@ -98,8 +99,7 @@ type PostList {
 
 type Document {
     documentId: Int!
-    # course: CourseDetails!
-    author: UserProfile!
+    course: CourseDetails!
     title: String!
     description: String!
     files: [DocumentFile!]!
@@ -127,7 +127,6 @@ type Assignment {
     assignmentId: Int!
     course: CourseDetails!
     title: String!
-    author: UserProfile!
     content: String!
     files: [AssignmentFile!]!
     createAt: Date!
@@ -225,7 +224,7 @@ input DocumentInput {
     courseId:Int! 
     title: String! 
     description: String!
-    files: [File!]! = {files: []}
+    files: [File!]! = []
 }
 
 input AssignmentInput {
@@ -233,7 +232,7 @@ input AssignmentInput {
     title: String! 
     content: String! 
     dueDate: Date
-    files: [File!]! = {files: []}
+    files: [File!]! = []
 }
 
 type Mutation {

@@ -4,7 +4,8 @@ const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
-
+const sequelize = require('sequelize');
+const { parseObject } = require('../../helps');
 const getThread = async (_, args, { userCtx }) => {
     const { courseId, pageNumber, pageSize } = args;
     if (userCtx.error) throw new AuthenticationError(userCtx.error);
@@ -35,19 +36,22 @@ const getThread = async (_, args, { userCtx }) => {
     const totalRecords = await db.ForumThreads.count({
         where: snakeCase({ courseId }),
     });
-    const threadList = await db.ForumThreads.findAll({
+    const _threadList = await db.ForumThreads.findAll({
         limit: pageSize,
         offset: pageNumber * pageSize,
-        include: [
-            { model: db.Users, as: 'author' },
-            // { model: db.Courses, as: 'course' },
-        ],
+        attributes: { include: [
+            [
+              sequelize.literal('(SELECT COUNT(*) FROM ThreadPosts WHERE ForumThreads.thread_id = ThreadPosts.thread_id)'), 'postCount'
+            ],
+          ]},
+        include: [ 'author' ],
         where: snakeCase({ courseId }),
         order: [['update_at', 'DESC']],
         nest: true,
-        raw: true,
+        // raw: true,
     });
-
+    console.log(parseObject(_threadList));
+    const threadList = parseObject(_threadList);
     return camelCase({
         threadList,
         totalRecords,

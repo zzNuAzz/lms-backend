@@ -12,7 +12,12 @@ const editPost = async (_, args, { userCtx }) => {
             user: { userId },
         } = userCtx;
         const { postId, content } = args;
-        const post = await db.ThreadPost.findByPk(postId);
+        const post = await db.ThreadPosts.findByPk(postId);
+
+        if(post == null) {
+            throw new UserInputError("Post does not exist!")
+        }
+
         if (post['author_id'] !== userId) {
             throw new AuthenticationError(
                 "You don't have permission to edit on this post."

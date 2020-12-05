@@ -22,8 +22,8 @@ const createPost = async (_, { threadId, content }, { userCtx }) => {
             );
         }
         if (role === 'Student') {
-            const filter = { userId: authorId, threadId, status: 'Accepted' };
-            const member = await db.ForumThreads.findOne({
+            const filter = { userId: authorId, courseId: thread['course_id'], status: 'Accepted' };
+            const member = await db.CourseMembers.findOne({
                 where: snakeCase(filter),
             });
             if (member == null) {
@@ -33,7 +33,7 @@ const createPost = async (_, { threadId, content }, { userCtx }) => {
             }
         }
 
-        const post = await db.ThreadPost.create(
+        const post = await db.ThreadPosts.create(
             snakeCase({
                 threadId,
                 authorId,

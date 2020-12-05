@@ -5,7 +5,7 @@ const {
     AuthenticationError,
 } = require('apollo-server-express');
 
-const createThread = async (_, { courseId, title, content }, { userCtx }) => {
+const createThread = async (_, { courseId, title, content, tags }, { userCtx }) => {
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
@@ -39,11 +39,12 @@ const createThread = async (_, { courseId, title, content }, { userCtx }) => {
                 authorId,
                 title,
                 content,
+                tags,
                 createAt: Date.now(),
                 updateAt: Date.now(),
             })
         );
-        const insertedId = camelCase(thread.toJSON()).forumThreadId;
+        const insertedId = camelCase(thread.toJSON()).threadId;
         return {
             insertedId,
             success: true,

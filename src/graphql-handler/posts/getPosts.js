@@ -22,7 +22,7 @@ const getPost = async (_, args, { userCtx }) => {
         );
     }
     if (role === 'Student') {
-        const filter = { userId: authorId, threadId, status: 'Accepted' };
+        const filter = { userId: authorId, courseId: thread['course_id'], status: 'Accepted' };
         const member = await db.CourseMembers.findOne({
             where: snakeCase(filter),
         });
@@ -32,24 +32,22 @@ const getPost = async (_, args, { userCtx }) => {
             );
         }
     }
-    const totalRecords = await db.ThreadPost.count({
+    const totalRecords = await db.ThreadPosts.count({
         where: snakeCase({ threadId }),
     });
-    const threadPostList = await db.ThreadPost.findAll({
+    const postList = await db.ThreadPosts.findAll({
         limit: pageSize,
         offset: pageNumber * pageSize,
-        include: [
-            { model: db.Users, as: 'author' },
-            // { model: db.Courses, as: 'course' },
-        ],
+        include: ['author'],
         where: snakeCase({ threadId }),
-        order: [['update_at', 'DESC']],
+        order: [['create_at', 'DESC']],
         nest: true,
         raw: true,
     });
 
+    console.log(postList)
     return camelCase({
-        threadPostList,
+        postList,
         totalRecords,
         pageNumber,
         totalPages: Math.ceil(totalRecords / pageSize),

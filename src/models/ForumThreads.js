@@ -1,16 +1,14 @@
 module.exports = (sequelize, Sequelize) => {
     const ForumThreads = sequelize.define('ForumThreads', {
-        forum_thread_id: {
+        thread_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
-
         course_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-
         author_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
@@ -20,10 +18,12 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING,
             allowNull: false,
         },
-
         content: {
             type: Sequelize.TEXT,
             allowNull: false,
+        },
+        tags: {
+            type: Sequelize.STRING,
         },
         create_at: {
             type: Sequelize.STRING,
@@ -47,8 +47,8 @@ module.exports = (sequelize, Sequelize) => {
             as: 'course',
         });
         ForumThreads.hasMany(models.ThreadPosts, {
-            foreignKey: 'forum_thread_id',
-            sourceKey: 'forum_thread_id',
+            foreignKey: 'thread_id',
+            sourceKey: 'thread_id',
         });
     };
     return ForumThreads;

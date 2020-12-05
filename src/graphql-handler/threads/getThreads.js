@@ -9,20 +9,20 @@ const getThread = async (_, args, { userCtx }) => {
     const { courseId, pageNumber, pageSize } = args;
     if (userCtx.error) throw new AuthenticationError(userCtx.error);
     const {
-        user: { userId: authorId, role },
+        user: { userId, role },
     } = userCtx;
 
     const course = await db.Courses.findByPk(courseId, { raw: true });
     if (course == null) {
         throw new UserInputError('CourseId is invalid');
     }
-    if (role === 'Teacher' && course['host_id'] !== authorId) {
+    if (role === 'Teacher' && course['host_id'] !== userId) {
         throw new AuthenticationError(
             'You does not have permission with this course!'
         );
     }
     if (role === 'Student') {
-        const filter = { userId: authorId, courseId, status: 'Accepted' };
+        const filter = { userId, courseId, status: 'Accepted' };
         const member = await db.CourseMembers.findOne({
             where: snakeCase(filter),
         });
@@ -35,7 +35,7 @@ const getThread = async (_, args, { userCtx }) => {
     const totalRecords = await db.ForumThreads.count({
         where: snakeCase({ courseId }),
     });
-    const forumThreadList = await db.ForumThreads.findAll({
+    const threadList = await db.ForumThreads.findAll({
         limit: pageSize,
         offset: pageNumber * pageSize,
         include: [
@@ -49,7 +49,7 @@ const getThread = async (_, args, { userCtx }) => {
     });
 
     return camelCase({
-        forumThreadList,
+        threadList,
         totalRecords,
         pageNumber,
         totalPages: Math.ceil(totalRecords / pageSize),

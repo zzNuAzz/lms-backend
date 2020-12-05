@@ -1,12 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
     const ThreadPosts = sequelize.define('ThreadPosts', {
-        thread_post_id: {
+        post_id: {
             type: Sequelize.INTEGER,
             autoIncrement: true,
             primaryKey: true,
         },
 
-        forum_thread_id: {
+        thread_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
@@ -34,12 +34,13 @@ module.exports = (sequelize, Sequelize) => {
 
     ThreadPosts.associate = models => {
         ThreadPosts.belongsTo(models.ForumThreads, {
-            foreignKey: 'forum_thread_id',
-            targetKey: 'forum_thread_id',
+            foreignKey: 'thread_id',
+            targetKey: 'thread_id',
         });
         ThreadPosts.belongsTo(models.Users, {
             foreignKey: 'author_id',
             targetKey: 'user_id',
+            as:'author'
         })
     };
     return ThreadPosts;

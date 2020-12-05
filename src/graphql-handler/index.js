@@ -23,8 +23,9 @@ const resolvers = {
         usernameAvailability: users.checkUsername,
 
         courseList: courses.getCourseList,
-        courseUserList: courses.getCourseUserList,
         course: courses.getCourse,
+
+        courseMemberList: mustBeLogin(courses.getCourseMemberList),
 
         threadList: mustBeLogin(threads.getThread),
 

@@ -46,6 +46,7 @@ module.exports = (sequelize, Sequelize) => {
         CourseMembers.belongsTo(models.Users, {
             foreignKey: 'user_id',
             targetKey: 'user_id',
+            as: 'user'
         });
     };
     return CourseMembers;

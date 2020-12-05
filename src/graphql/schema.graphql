@@ -53,9 +53,17 @@ type UserCourseList {
     totalPages: Int!
 }
 
-type UserList {
-    userList: [UserProfile!]!
+type CourseMember {
+    courseMemberId: Int!
+    courseId: Int!
+    user: UserProfile!
     status: EnrollStatus!
+    description: String
+
+}
+
+type MemberList {
+    memberList: [CourseMember!]!
     totalRecords: Int!
     pageNumber: Int!
     totalPages: Int!
@@ -181,7 +189,7 @@ type Query {
     # get courses  from a user
     userCourseList(userId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): UserCourseList!
     # get users from a course
-    courseUserList(courseId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): UserList!
+    courseMemberList(courseId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): MemberList!
     # get threads in a course
     threadList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): ThreadList!
     # get posts in a thread

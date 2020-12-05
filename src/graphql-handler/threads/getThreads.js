@@ -50,7 +50,6 @@ const getThread = async (_, args, { userCtx }) => {
         nest: true,
         // raw: true,
     });
-    console.log(parseObject(_threadList));
     const threadList = parseObject(_threadList);
     return camelCase({
         threadList,

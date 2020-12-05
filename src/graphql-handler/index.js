@@ -28,6 +28,8 @@ const resolvers = {
 
         threadList: mustBeLogin(threads.getThread),
 
+        postList: mustBeLogin(posts.getPost),
+
         documentList: mustBeLogin(documents.getDocumentList),
 
         assignmentList: mustBeLogin(assignment.getAssignmentList),
@@ -50,7 +52,6 @@ const resolvers = {
 
         createPost: mustBeLogin(posts.createPost),
         editPost: mustBeLogin(posts.editPost),
-        // getPost: mustBeLogin(posts.getPost),
         
         createDocument: mustBeTeacher(documents.createDocument),
         editDocument: mustBeTeacher(documents.editDocument),

@@ -12,11 +12,12 @@ const getAssignmentList = async (_, args, { userCtx }) => {
     const {
         user: { userId, role },
     } = userCtx;
-    console.log(userId);
+
     const course = await db.Courses.findByPk(courseId, { raw: true });
     if (course == null) {
         throw new UserInputError('CourseId is invalid');
     }
+    console.log(role, course['host_id'], userId);
     if (role === 'Teacher' && course['host_id'] !== userId) {
         throw new AuthenticationError(
             'You does not have permission with this course!'
@@ -40,10 +41,11 @@ const getAssignmentList = async (_, args, { userCtx }) => {
         limit: pageSize,
         offset: pageNumber * pageSize,
         where: snakeCase({ courseId }),
-        include: ['files', 'author'],
+        include: ['files', {association: "course", include:'host'}],
         order: [['update_at', 'DESC']],
     });
     const assignmentList = parseObject(_assignmentList);
+    console.log(assignmentList);
     return camelCase({
         assignmentList,
         totalRecords,

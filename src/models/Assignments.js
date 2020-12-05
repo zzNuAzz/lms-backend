@@ -10,10 +10,10 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
-        host_id: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-        },
+        // host_id: {
+        //     type: Sequelize.INTEGER,
+        //     allowNull: false,
+        // },
         title: {
             type: Sequelize.STRING,
             allowNull: false,
@@ -44,11 +44,11 @@ module.exports = (sequelize, Sequelize) => {
             targetKey: 'course_id',
             as: "course"
         });
-        Assignments.belongsTo(models.Users, {
-            foreignKey: 'host_id',
-            targetKey: 'user_id',
-            as: "author"
-        });
+        // Assignments.belongsTo(models.Users, {
+        //     foreignKey: 'host_id',
+        //     targetKey: 'user_id',
+        //     as: "author"
+        // });
         Assignments.hasMany(models.AssignmentFiles, {
             foreignKey: 'assignment_id',
             sourceKey: 'assignment_id',

@@ -14,6 +14,6 @@
     "port": 3001,
     "jwt": "",
     "bcrypt_salt": 10,
-    "file-store-dir": ".",
+    "file-store-dir": "./store",
     "file-store-tmp": "./tmp"
 }

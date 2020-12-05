@@ -1,6 +1,7 @@
 node_modules
 
 config/development.json
-
+store
+tmp
 .vscode
 **/.DS_Store

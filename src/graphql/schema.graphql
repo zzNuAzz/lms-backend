@@ -62,35 +62,44 @@ type UserList {
 }
 
 type Thread {
-    forumThreadId: Int!
+    threadId: Int!
     author: UserProfile!
     title: String!
     content: String!
+    tags: String
+    postCount: Int
     createAt: Date!
     updateAt: Date!
 }
-
-type Post {
-    postId: Int!
-    thread: Thread!
-    author: UserProfile!
-    content: String!
-    createAt: Date!
-    updateAt: Date!
-}
-
 
 type ThreadList {
-    forumThreadList: [Thread!]!
+    threadList: [Thread!]!
     totalRecords: Int!
     pageNumber: Int!
     totalPages: Int!
 }
 
+type Post {
+    postId: Int!
+    threadId: Int!
+    author: UserProfile!
+    content: String!
+    createAt: Date!
+    updateAt: Date!
+}
+
+
+type PostList {
+    postList: [Post!]!
+    totalRecords: Int!
+    pageNumber: Int!
+    totalPages: Int!
+}
+
+
 type Document {
     documentId: Int!
-    # course: CourseDetails!
-    author: UserProfile!
+    course: CourseDetails!
     title: String!
     description: String!
     files: [DocumentFile!]!
@@ -113,18 +122,11 @@ type DocumentList {
     totalPages: Int!
 }
 
-type PostList {
-    postList: [Post!]!
-    totalRecords: Int!
-    pageNumber: Int!
-    totalPages: Int!
-}
 
 type Assignment {
     assignmentId: Int!
     course: CourseDetails!
     title: String!
-    author: UserProfile!
     content: String!
     files: [AssignmentFile!]!
     createAt: Date!
@@ -222,7 +224,7 @@ input DocumentInput {
     courseId:Int! 
     title: String! 
     description: String!
-    files: [File!]! = {files: []}
+    files: [File!]! = []
 }
 
 input AssignmentInput {
@@ -230,7 +232,7 @@ input AssignmentInput {
     title: String! 
     content: String! 
     dueDate: Date
-    files: [File!]! = {files: []}
+    files: [File!]! = []
 }
 
 type Mutation {
@@ -259,7 +261,7 @@ type Mutation {
     # update course member details
     updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
     # create thread forum
-    createThread(courseId: Int!, title: String!, content: String!): InsertedMessage!
+    createThread(courseId: Int!, title: String!, content: String! tags: String): InsertedMessage!
     # edit thread details
     editThread(threadId:Int! title: String content: String): BooleanMessage!
     # create document (for teacher)

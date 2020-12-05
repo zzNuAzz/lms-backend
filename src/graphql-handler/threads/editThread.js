@@ -11,7 +11,7 @@ const editThread = async (_, args, { userCtx }) => {
         const {
             user: { userId },
         } = userCtx;
-        const { threadId, title, content } = args;
+        const { threadId, title, content, tags } = args;
         const thread = await db.ForumThreads.findByPk(threadId);
         if (thread['author_id'] !== userId) {
             throw new AuthenticationError(
@@ -26,6 +26,12 @@ const editThread = async (_, args, { userCtx }) => {
             thread['content'] = content;
             thread['update_at'] = Date.now();
         }
+
+        if (tags) {
+            thread['tags'] = title;
+            thread['update_at'] = Date.now();
+        }
+
         await thread.save();
         return { success: true };
     } catch (err) {

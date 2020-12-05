@@ -4,25 +4,26 @@ const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
-
+const sequelize = require('sequelize');
+const { parseObject } = require('../../helps');
 const getThread = async (_, args, { userCtx }) => {
     const { courseId, pageNumber, pageSize } = args;
     if (userCtx.error) throw new AuthenticationError(userCtx.error);
     const {
-        user: { userId: authorId, role },
+        user: { userId, role },
     } = userCtx;
 
     const course = await db.Courses.findByPk(courseId, { raw: true });
     if (course == null) {
         throw new UserInputError('CourseId is invalid');
     }
-    if (role === 'Teacher' && course['host_id'] !== authorId) {
+    if (role === 'Teacher' && course['host_id'] !== userId) {
         throw new AuthenticationError(
             'You does not have permission with this course!'
         );
     }
     if (role === 'Student') {
-        const filter = { userId: authorId, courseId, status: 'Accepted' };
+        const filter = { userId, courseId, status: 'Accepted' };
         const member = await db.CourseMembers.findOne({
             where: snakeCase(filter),
         });
@@ -35,21 +36,24 @@ const getThread = async (_, args, { userCtx }) => {
     const totalRecords = await db.ForumThreads.count({
         where: snakeCase({ courseId }),
     });
-    const forumThreadList = await db.ForumThreads.findAll({
+    const _threadList = await db.ForumThreads.findAll({
         limit: pageSize,
         offset: pageNumber * pageSize,
-        include: [
-            { model: db.Users, as: 'author' },
-            // { model: db.Courses, as: 'course' },
-        ],
+        attributes: { include: [
+            [
+              sequelize.literal('(SELECT COUNT(*) FROM ThreadPosts WHERE ForumThreads.thread_id = ThreadPosts.thread_id)'), 'postCount'
+            ],
+          ]},
+        include: [ 'author' ],
         where: snakeCase({ courseId }),
         order: [['update_at', 'DESC']],
         nest: true,
-        raw: true,
+        // raw: true,
     });
-
+    console.log(parseObject(_threadList));
+    const threadList = parseObject(_threadList);
     return camelCase({
-        forumThreadList,
+        threadList,
         totalRecords,
         pageNumber,
         totalPages: Math.ceil(totalRecords / pageSize),

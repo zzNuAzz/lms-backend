@@ -26,7 +26,7 @@ const createAssignment = async (_, args, { userCtx }) => {
         const assignment = await db.Assignments.create(
             snakeCase({
                 courseId,
-                hostId,
+                // hostId,
                 title,
                 content,
                 dueDate,

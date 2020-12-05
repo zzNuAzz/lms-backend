@@ -20,7 +20,7 @@ const getDocumentList = async (_, args, { userCtx }) => {
     const _documentList = await db.Documents.findAll({
         limit: pageSize,
         offset: pageNumber * pageSize,
-        include: ['author', 'files'],
+        include: ['files', {association: 'course', include: 'host'}],
         where: snakeCase({ courseId }),
     });
     const documentList = parseObject(_documentList);

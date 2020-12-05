@@ -50,7 +50,7 @@ module.exports = (sequelize, Sequelize) => {
         },
         picture_url: {
             type: Sequelize.STRING,
-            defaultValue: '/file/0.jpg',
+            defaultValue: '/files/avatar/0.png',
             allowNull: false,
         },
     });
@@ -60,14 +60,14 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'user_id',
             sourceKey: 'user_id',
         });
-        Users.hasMany(models.ForumThreads, {
-            foreignKey: 'author_id',
-            sourceKey: 'user_id',
-        });
-        Users.hasMany(models.ThreadPosts, {
-            foreignKey: 'author_id',
-            sourceKey: 'user_id',
-        });
+        // Users.hasMany(models.ForumThreads, {
+        //     foreignKey: 'author_id',
+        //     sourceKey: 'user_id',
+        // });
+        // Users.hasMany(models.ThreadPosts, {
+        //     foreignKey: 'author_id',
+        //     sourceKey: 'user_id',
+        // });
     };
     return Users;
 };

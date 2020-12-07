@@ -190,6 +190,8 @@ type Query {
     userCourseList(userId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): UserCourseList!
     # get users from a course
     courseMemberList(courseId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): MemberList!
+    # get thread by threadId
+    thread(threadId: Int!): Thread
     # get threads in a course
     threadList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): ThreadList!
     # get posts in a thread

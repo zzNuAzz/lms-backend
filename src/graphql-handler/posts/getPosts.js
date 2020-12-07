@@ -44,8 +44,6 @@ const getPost = async (_, args, { userCtx }) => {
         nest: true,
         raw: true,
     });
-
-    console.log(postList)
     return camelCase({
         postList,
         totalRecords,

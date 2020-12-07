@@ -17,7 +17,6 @@ const getAssignmentList = async (_, args, { userCtx }) => {
     if (course == null) {
         throw new UserInputError('CourseId is invalid');
     }
-    console.log(role, course['host_id'], userId);
     if (role === 'Teacher' && course['host_id'] !== userId) {
         throw new AuthenticationError(
             'You does not have permission with this course!'
@@ -45,7 +44,6 @@ const getAssignmentList = async (_, args, { userCtx }) => {
         order: [['update_at', 'DESC']],
     });
     const assignmentList = parseObject(_assignmentList);
-    console.log(assignmentList);
     return camelCase({
         assignmentList,
         totalRecords,

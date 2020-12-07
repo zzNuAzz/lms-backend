@@ -8,7 +8,6 @@ const uploadAvatar = async (_, { avatar }, { userCtx }) => {
     const {
         user: { userId },
     } = userCtx;
-    console.log(userId)
     try {
         const { url } = await helps.saveAvatar(avatar, 'avatar', userId);
         await db.Users.update(

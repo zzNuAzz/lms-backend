@@ -27,7 +27,8 @@ const resolvers = {
 
         courseMemberList: mustBeLogin(courses.getCourseMemberList),
 
-        threadList: mustBeLogin(threads.getThread),
+        thread: mustBeLogin(threads.getThread),
+        threadList: mustBeLogin(threads.getThreadList),
 
         postList: mustBeLogin(posts.getPost),
 

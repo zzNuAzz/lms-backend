@@ -18,7 +18,7 @@ const { getUser } = require('../controllers/users');
 const resolvers = {
     Query: {
         userProfile: users.getUserProfileById,
-        userCourseList: users.getUserCourses,
+        userCourseList: mustBeStudent(users.getUserCourses),
         currentUser: users.resolveUser,
         usernameAvailability: users.checkUsername,
 
@@ -32,6 +32,7 @@ const resolvers = {
 
         postList: mustBeLogin(posts.getPost),
 
+        document: mustBeLogin(documents.getDocument),
         documentList: mustBeLogin(documents.getDocumentList),
 
         assignmentList: mustBeLogin(assignment.getAssignmentList),

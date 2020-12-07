@@ -3,6 +3,9 @@ const db = require('../../models');
 
 const getUserCourses = async (_, args, { userCtx }) => {
     const { userId, status, pageNumber = 0, pageSize = 10 } = args;
+    
+    if (userCtx.error) throw new AuthenticationError(userCtx.error);
+    
     const filters = { status, userId };
 
     const totalRecords = await db.CourseMembers.count({

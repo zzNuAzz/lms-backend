@@ -4,33 +4,27 @@ const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
-const sequelize = require('sequelize');
+const { parseObject } = require('../../helps');
 
-const getThread = async (_, args, { userCtx }) => {
-    const { threadId } = args;
+const getDocument = async (_, args, { userCtx }) => {
+    const { documentId } = args;
     if (userCtx.error) throw new AuthenticationError(userCtx.error);
     const {
         user: { userId, role },
     } = userCtx;
 
-    const thread = await db.ForumThreads.findOne({
-        where: snakeCase({ threadId }),
-        attributes: { include: [
-            [
-              sequelize.literal('(SELECT COUNT(*) FROM ThreadPosts WHERE ForumThreads.thread_id = ThreadPosts.thread_id)'), 'postCount'
-            ],
-          ]},
-        include: ['author', 'course'],
-        raw: true,
-        nest: true,
+    const _document = await db.Documents.findOne({
+        include: [ 'files', {association:'course', include:['host']} ],
+        where: snakeCase({ documentId }),
+        nest: true
     });
-
-    if(thread === null) {
-        throw new UserInputError("ThreadId is invalid");
+    const document = parseObject(_document);
+    
+    if(document === null) {
+        throw new UserInputError("documentId is invalid.");
     }
-
-    const course = thread.course;
-
+    
+    const course = document.course;
     if (role === 'Teacher' && course['host_id'] !== userId) {
         throw new AuthenticationError(
             'You does not have permission with this course!'
@@ -47,7 +41,6 @@ const getThread = async (_, args, { userCtx }) => {
             );
         }
     }
-
-    return camelCase(thread);
+    return camelCase(document);
 };
-module.exports = getThread;
+module.exports = getDocument;

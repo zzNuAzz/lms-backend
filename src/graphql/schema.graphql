@@ -198,7 +198,9 @@ type Query {
     postList(threadId: Int!, pageNumber: Int = 0, pageSize: Int = 10): PostList!
     # get assignments in a course
     assignmentList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): AssignmentList!
-    #get list document in a course
+    # get document by document Id
+    document(documentId: Int!): Document
+    # get list document in a course
     documentList(courseId: Int!, pageNumber:Int = 0, pageSize: Int = 10): DocumentList!
 }
 

@@ -71,6 +71,7 @@ type MemberList {
 
 type Thread {
     threadId: Int!
+    courseId: Int!
     author: UserProfile!
     title: String!
     content: String!

@@ -12,7 +12,7 @@ const generateJWT = (req, res) => {
             ...user,
             signedIn: true,
         };
-        const token = jwt.sign(credentials, JWT_SECRET);
+        const token = jwt.sign(credentials, JWT_SECRET, {expiresIn: "24h"});
         res.cookie('token', token, {
             httpOnly: true,
             maxAge: 1000 * 60 * 60 * 24,

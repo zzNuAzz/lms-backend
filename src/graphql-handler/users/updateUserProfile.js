@@ -6,21 +6,30 @@ const validateUserInfo = changes => {
 };
 
 const updateUserProfile = async (_, { changes }, { userCtx }) => {
-    if (userCtx.error) throw new AuthenticationError(userCtx.error);
-    const {
-        user: { userId },
-    } = userCtx;
+    try {
+        if (userCtx.error) throw new AuthenticationError(userCtx.error);
+        const {
+            user: { userId },
+        } = userCtx;
 
-    validateUserInfo(changes);
+        validateUserInfo(changes);
 
-    await db.Users.update(snakeCase(changes), {
-        where: snakeCase({ userId }),
-    });
-    const changedUser = await db.Users.findOne({
-        where: snakeCase({ userId }),
-        raw: true,
-    });
-    return camelCase(changedUser);
+        await db.Users.update(snakeCase(changes), {
+            where: snakeCase({ userId }),
+        });
+        return { success: true };
+    } catch (err) {
+        if (
+            !(err instanceof UserInputError) &&
+            !(err instanceof AuthenticationError)
+        ) {
+            console.log(err);
+        }
+        return {
+            success: false,
+            message: err.message,
+        };
+    }
 };
 
 module.exports = updateUserProfile;

@@ -214,6 +214,7 @@ input UserAccountInput {
     role: UserRole! = Student
     firstName: String
     lastName: String
+    email: String
     phone: String
     address: String
     birthday: String
@@ -252,7 +253,7 @@ type Mutation {
     # create account, default Student type
     createUserAccount(user: UserAccountInput!): UserProfile!
     # edit user info
-    updateUserProfile(changes: UserUpdateInput!): UserProfile!
+    updateUserProfile(changes: UserUpdateInput!): BooleanMessage!
     # update password
     updateUserPassword(currentPassword: String!, newPassword: String!): BooleanMessage!
     # user upload avatar

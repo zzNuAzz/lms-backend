@@ -9,20 +9,20 @@ const updateCourse = async (_, args, { userCtx }) => {
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
-            user: { hostId },
+            user: { userId },
         } = userCtx;
         const { courseId, description } = args;
         const course = await db.Courses.findByPk(courseId);
-        if (course['host_id'] !== hostId) {
+        if (course['host_id'] !== userId) {
             throw new AuthenticationError(
                 "You don't have permission to edit on this course."
             );
         }
         
-        if (content) {
+        if (description) {
             course['description'] = description;
         }
-        await post.save();
+        await course.save();
         return {
             success: true,
         };

@@ -13,7 +13,7 @@ const getPost = async (_, args, { userCtx }) => {
     } = userCtx;
 
     const post = await db.ThreadPosts.findOne({
-        include: ['author', 'thread'],
+        include: ['author', {association: 'thread', include: ['course']}],
         where: snakeCase({ postId }),
         nest: true,
         raw: true,
@@ -22,8 +22,8 @@ const getPost = async (_, args, { userCtx }) => {
     if (post === null) {
         throw new UserInputError('postId is invalid.');
     }
-    const thread = post.thread;
-    if (role === 'Teacher' && thread['author_id'] !== userId) {
+    const course = post.thread.course;
+    if (role === 'Teacher' && course['host_id'] !== userId) {
         throw new AuthenticationError('You does not have permission with this post!' );
     }
     if (role === 'Student') {

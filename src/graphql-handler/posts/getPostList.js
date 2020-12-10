@@ -12,17 +12,26 @@ const getPostList = async (_, args, { userCtx }) => {
         user: { userId, role },
     } = userCtx;
 
-    const thread = await db.ForumThreads.findByPk(threadId, { raw: true });
+    // const thread = await db.ForumThreads.findByPk(threadId, { raw: true });
+
+    const thread = await db.ForumThreads.findOne({
+        include: ['course'],
+        where: snakeCase({threadId}),
+        nest: true,
+        raw: true
+    })
+
     if (thread == null) {
         throw new UserInputError('ThreadId is invalid');
     }
-    if (role === 'Teacher' && thread['author_id'] !== userId) {
+    const course = thread.course;
+    if (role === 'Teacher' && course['host_id'] !== userId) {
         throw new AuthenticationError(
             'You does not have permission with this thread!'
         );
     }
     if (role === 'Student') {
-        const filter = { userId , courseId: thread['course_id'], status: 'Accepted' };
+        const filter = { userId , courseId: course['course_id'], status: 'Accepted' };
         const member = await db.CourseMembers.findOne({
             where: snakeCase(filter),
         });

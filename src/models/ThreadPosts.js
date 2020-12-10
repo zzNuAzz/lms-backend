@@ -36,6 +36,7 @@ module.exports = (sequelize, Sequelize) => {
         ThreadPosts.belongsTo(models.ForumThreads, {
             foreignKey: 'thread_id',
             targetKey: 'thread_id',
+            as: 'thread'
         });
         ThreadPosts.belongsTo(models.Users, {
             foreignKey: 'author_id',

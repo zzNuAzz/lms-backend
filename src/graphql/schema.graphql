@@ -195,8 +195,12 @@ type Query {
     thread(threadId: Int!): Thread
     # get threads in a course
     threadList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): ThreadList!
+    # get post by postId
+    post(postId: Int!): Post
     # get posts in a thread
     postList(threadId: Int!, pageNumber: Int = 0, pageSize: Int = 10): PostList!
+    # get a assignment by assignment id
+    assignment(assignmentId: Int!): Assignment
     # get assignments in a course
     assignmentList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): AssignmentList!
     # get document by document Id

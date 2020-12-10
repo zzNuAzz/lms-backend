@@ -1,29 +1,37 @@
+const db = require('../../models');
 const { snakeCase, camelCase } = require('change-case-object');
 const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
-const db = require('../../models');
 const { parseObject } = require('../../helps');
 
-const getAssignmentList = async (_, args, { userCtx }) => {
-    const { courseId, pageNumber, pageSize } = args;
+const getAssignment = async (_, args, { userCtx }) => {
+    const { assignmentId } = args;
     if (userCtx.error) throw new AuthenticationError(userCtx.error);
     const {
         user: { userId, role },
     } = userCtx;
 
-    const course = await db.Courses.findByPk(courseId, { raw: true });
-    if (course == null) {
-        throw new UserInputError('CourseId is invalid');
+    const _assignment = await db.Assignments.findOne({
+        include: [ 'files', {association:'course', include:['host']} ],
+        where: snakeCase({ assignmentId }),
+        nest: true
+    });
+    const assignment = parseObject(_assignment);
+    
+    if(assignment === null) {
+        throw new UserInputError("assignmentId is invalid.");
     }
+    
+    const course = assignment.course;
     if (role === 'Teacher' && course['host_id'] !== userId) {
         throw new AuthenticationError(
             'You does not have permission with this course!'
         );
     }
     if (role === 'Student') {
-        const filter = { userId, courseId, status: 'Accepted' };
+        const filter = { userId, courseId: course['course_id'], status: 'Accepted' };
         const member = await db.CourseMembers.findOne({
             where: snakeCase(filter),
         });
@@ -33,22 +41,6 @@ const getAssignmentList = async (_, args, { userCtx }) => {
             );
         }
     }
-    const totalRecords = await db.Assignments.count({
-        where: snakeCase({ courseId }),
-    });
-    const _assignmentList = await db.Assignments.findAll({
-        limit: pageSize,
-        offset: pageNumber * pageSize,
-        where: snakeCase({ courseId }),
-        include: ['files', {association: "course", include:'host'}],
-        order: [['update_at', 'DESC']],
-    });
-    const assignmentList = parseObject(_assignmentList);
-    return camelCase({
-        assignmentList,
-        totalRecords,
-        pageNumber,
-        totalPages: Math.ceil(totalRecords / pageSize),
-    });
+    return camelCase(assignment);
 };
-module.exports = getAssignmentList;
+module.exports = getAssignment;

@@ -30,12 +30,15 @@ const resolvers = {
         thread: mustBeLogin(threads.getThread),
         threadList: mustBeLogin(threads.getThreadList),
 
-        postList: mustBeLogin(posts.getPost),
+        post: mustBeLogin(posts.getPost),
+        postList: mustBeLogin(posts.getPostList),
 
         document: mustBeLogin(documents.getDocument),
         documentList: mustBeLogin(documents.getDocumentList),
 
+        assignment: mustBeLogin(assignment.getAssignment),
         assignmentList: mustBeLogin(assignment.getAssignmentList),
+
     },
     Mutation: {
         createUserAccount: users.createUser,

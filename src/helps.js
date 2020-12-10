@@ -4,7 +4,6 @@ const config = require('config');
 const { v4: uuidv4 } = require('uuid');
 const redisClient = require('./redis');
 const { UserInputError } = require('apollo-server-express');
-const { Instance } = require('sequelize');
 
 const normalizeFileName = str =>
     str

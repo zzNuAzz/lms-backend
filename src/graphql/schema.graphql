@@ -212,8 +212,8 @@ input UserAccountInput {
     username: String!
     password: String!
     role: UserRole! = Student
-    firstName: String
-    lastName: String
+    firstName: String!
+    lastName: String!
     email: String
     phone: String
     address: String
@@ -221,10 +221,11 @@ input UserAccountInput {
 }
 
 input UserUpdateInput {
-    firstName: String
-    lastName: String
+    firstName: String!
+    lastName: String!
     address: String
     phone: String
+    email: String
     birthday: String
 }
 

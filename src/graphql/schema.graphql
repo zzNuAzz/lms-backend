@@ -139,6 +139,7 @@ type Assignment {
     content: String!
     files: [AssignmentFile!]!
     createAt: Date!
+    updateAt: Date!
     dueDate: Date
 }
 
@@ -156,6 +157,31 @@ type AssignmentList {
     totalPages: Int!
 }
 
+type Submission {
+    submissionId: Int!
+    assignmentId: Int!
+    author: UserProfile!
+    description: String
+    files: [SubmissionFile!]!
+    createAt: Date!
+    updateAt: Date!
+}
+
+type SubmissionFile {
+    submissionFileId: Int!
+    filename: String!
+    url: String!
+    mimetype: String!
+}
+
+type SubmissionList {
+    submissionList: [Submission!]!
+    totalRecords: Int!
+    pageNumber: Int!
+    totalPages: Int!
+}
+
+
 type BooleanMessage {
     success: Boolean!
     message: String
@@ -166,7 +192,6 @@ type InsertedMessage {
     insertedId: Int
     message: String
 }
-
 
 
 type FileUpload {
@@ -180,33 +205,39 @@ type Query {
     # get user is logging in, get by token in cookie from req
     currentUser: SignedInUser!
     # get user info by id
-    userProfile(userId: Int!): UserProfile
+    userProfile(userId: Int!): UserProfile!
     # check username before create account
     usernameAvailability(username: String!): Boolean!
     # get list course
     courseList(hostId: Int, pageNumber: Int = 0, pageSize: Int = 10): CourseList!
     # get course by Id
-    course(courseId: Int!): CourseDetails
+    course(courseId: Int!): CourseDetails!
     # get courses  from a user
     userCourseList(userId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): UserCourseList!
     # get users from a course
     courseMemberList(courseId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): MemberList!
     # get thread by threadId
-    thread(threadId: Int!): Thread
+    thread(threadId: Int!): Thread!
     # get threads in a course
     threadList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): ThreadList!
     # get post by postId
-    post(postId: Int!): Post
+    post(postId: Int!): Post!
     # get posts in a thread
     postList(threadId: Int!, pageNumber: Int = 0, pageSize: Int = 10): PostList!
     # get a assignment by assignment id
-    assignment(assignmentId: Int!): Assignment
+    assignment(assignmentId: Int!): Assignment!
     # get assignments in a course
     assignmentList(courseId: Int!, pageNumber: Int = 0, pageSize: Int = 10): AssignmentList!
     # get document by document Id
-    document(documentId: Int!): Document
+    document(documentId: Int!): Document!
     # get list document in a course
     documentList(courseId: Int!, pageNumber:Int = 0, pageSize: Int = 10): DocumentList!
+    # get submission of a user 
+    submission(assignmentId: Int!): Submission
+    # get submission by Id
+    submissionById(submissionId: Int!): Submission!
+    # get list submission
+    submissionList(assignmentId: Int!, pageNumber:Int = 0, pageSize: Int = 10): SubmissionList!
 }
 
 # Custom input type declarations

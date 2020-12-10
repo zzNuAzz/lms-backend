@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true,
         },
 
-        assignment_submission_id: {
+        submission_id: {
             type: Sequelize.INTEGER,
             allowNull: false,
         },
@@ -21,15 +21,14 @@ module.exports = (sequelize, Sequelize) => {
 
         mimetype: {
             type: Sequelize.STRING,
-            // values: ['pdf', 'doc', 'docx', 'xlsx', 'png', 'jpg'],
             allowNull: false,
         },
     });
 
     SubmissionFiles.associate = models => {
-        SubmissionFiles.belongsTo(models.AssignmentSubmissions, {
-            foreignKey: 'assignment_submission_id',
-            targetKey: 'assignment_submission_id',
+        SubmissionFiles.belongsTo(models.Submissions, {
+            foreignKey: 'submission_id',
+            targetKey: 'submission_id',
         });
     };
     return SubmissionFiles;

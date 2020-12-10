@@ -11,7 +11,9 @@ const threads = require('./threads');
 const documents = require('./documents');
 const posts = require('./posts');
 const uploadFile = require('./uploadFile');
-const assignment = require('./assignments');
+const assignments = require('./assignments');
+const submissions = require('./submissions');
+
 const { getUser } = require('../controllers/users');
 
 //mapping graphql query with function
@@ -24,8 +26,8 @@ const resolvers = {
 
         courseList: courses.getCourseList,
         course: courses.getCourse,
-
         courseMemberList: mustBeLogin(courses.getCourseMemberList),
+
 
         thread: mustBeLogin(threads.getThread),
         threadList: mustBeLogin(threads.getThreadList),
@@ -36,25 +38,31 @@ const resolvers = {
         document: mustBeLogin(documents.getDocument),
         documentList: mustBeLogin(documents.getDocumentList),
 
-        assignment: mustBeLogin(assignment.getAssignment),
-        assignmentList: mustBeLogin(assignment.getAssignmentList),
+        assignment: mustBeLogin(assignments.getAssignment),
+        assignmentList: mustBeLogin(assignments.getAssignmentList),
+
+        submission: mustBeStudent(submissions.getSubmission),
+        submissionById: mustBeLogin(submissions.getSubmissionById),
+        submissionList: mustBeTeacher(submissions.getSubmissionList),
 
     },
     Mutation: {
         createUserAccount: users.createUser,
-        createCourse: mustBeTeacher(courses.createCourse),
-        enrollCourse: mustBeStudent(courses.enrollCourse),
-        updateCourseMember: mustBeTeacher(courses.updateCourseMember),
-        updateCourse: mustBeTeacher(courses.updateCourse),
         updateUserProfile: mustBeLogin(users.updateUserProfile),
         updateUserPassword: mustBeLogin(users.updateUserPassword),
         uploadAvatar: mustBeLogin(users.uploadAvatar),
 
+        createCourse: mustBeTeacher(courses.createCourse),
+        enrollCourse: mustBeStudent(courses.enrollCourse),
+        updateCourseMember: mustBeTeacher(courses.updateCourseMember),
+        updateCourse: mustBeTeacher(courses.updateCourse),
+        
+
         createThread: mustBeLogin(threads.createThread),
         editThread: mustBeLogin(threads.editThread),
 
-        createAssignment: mustBeTeacher(assignment.createAssignment),
-        editAssignment: mustBeTeacher(assignment.editAssignment),
+        createAssignment: mustBeTeacher(assignments.createAssignment),
+        editAssignment: mustBeTeacher(assignments.editAssignment),
 
         createPost: mustBeLogin(posts.createPost),
         editPost: mustBeLogin(posts.editPost),

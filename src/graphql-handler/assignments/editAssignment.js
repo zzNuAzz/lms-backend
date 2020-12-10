@@ -1,5 +1,4 @@
 const db = require('../../models');
-const { snakeCase, camelCase } = require('change-case-object');
 const {
     UserInputError,
     AuthenticationError,
@@ -19,10 +18,17 @@ const editAssignment = async (_, args, { userCtx }) => {
             );
         }
         
-        if (content || title) {
+        if(content) {
             assignment['content'] = content;
+            assignment['update_at'] = Date.now();
+        }
+        if(title) {
             assignment['title'] = title;
+            assignment['update_at'] = Date.now();
+        }
+        if(dueDate) {
             assignment['due_date'] = dueDate;
+            assignment['update_at'] = Date.now();
         }
         await assignment.save();
         return {

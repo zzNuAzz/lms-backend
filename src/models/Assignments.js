@@ -54,7 +54,7 @@ module.exports = (sequelize, Sequelize) => {
             sourceKey: 'assignment_id',
             as: 'files',
         });
-        Assignments.hasMany(models.AssignmentSubmissions, {
+        Assignments.hasMany(models.Submissions, {
             foreignKey: 'assignment_id',
             sourceKey: 'assignment_id',
         });

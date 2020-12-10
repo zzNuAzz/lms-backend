@@ -4,13 +4,22 @@ const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
+const {parseObject} = require('../../helps');
 
-const getDocument = async (_, args, { userCtx }) => {
+const getSubmission = async (_, args, { userCtx }) => {
     if (userCtx.error) throw new AuthenticationError(userCtx.error);
+    const { assignmentId } = args;
     const {
-        user: { userId, role },
+        user: { userId: authorId },
     } = userCtx;
     
-    
+    const _submission = await db.Submissions.findOne({
+        include: ['author', 'files', {association: 'assignment', include: ['course']}],
+        where: snakeCase({assignmentId, authorId}),
+        nest: true
+    })
+    const submission = parseObject(_submission);
+
+    return camelCase(submission);
 };
-module.exports = getDocument;
+module.exports = getSubmission;

@@ -1,9 +1,10 @@
-const db = require('../../models');
+const Sequelize = require('sequelize');
 const { snakeCase, camelCase } = require('change-case-object');
 const {
-    UserInputError,
-    AuthenticationError,
+  UserInputError,
+  AuthenticationError,
 } = require('apollo-server-express');
+const db = require('../../models');
 const { parseObject } = require('../../helps');
 
 const getSubmission = async (_, args, { userCtx }) => {
@@ -11,9 +12,14 @@ const getSubmission = async (_, args, { userCtx }) => {
     const { assignmentId, pageNumber, pageSize } = args;
     const {user: {userId}} = userCtx;
 
-    const totalRecords = await db.Submissions.count({
-      where: snakeCase({ assignmentId }),
-    });
+    const where =  {
+      ['assignment_id']: assignmentId,
+      ['submission_id']:{
+        [Sequelize.Op.in]: 
+          Sequelize.literal(`(select max(submission_id) from Submissions group by assignment_id, author_id)`)
+      }
+    }
+    const totalRecords = await db.Submissions.count({ where });
     
     const _submissionList = await db.Submissions.findAll({
         limit: pageSize,
@@ -22,10 +28,11 @@ const getSubmission = async (_, args, { userCtx }) => {
           association: 'assignment',
           include: [{ association: 'course', where: { ['host_id']: userId } }],
         }],
-        where: snakeCase({ assignmentId }),
-        order: [['create_at', 'ASC']],
+        where,
+        order: [['submission_id', 'ASC']],
         nest: true,
     });
+
     const submissionList = parseObject(_submissionList);
     
     return camelCase({

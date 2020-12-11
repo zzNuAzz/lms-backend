@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const config = require('config');
-const { v4: uuidv4 } = require('uuid');
+const { v4 } = require('uuid');
 const redisClient = require('./redis');
 const { UserInputError } = require('apollo-server-express');
+
+const helps = module.exports;
 
 const normalizeFileName = str =>
     str
@@ -11,6 +13,12 @@ const normalizeFileName = str =>
         .normalize('NFD')
         .replace(/[đ|\u00f0]/g, 'd')
         .replace(/[\u0300-\u036f]/g, '');
+
+module.exports.uuid = () => {
+    const hexString = v4().replace("-", "");
+    const base64String = Buffer.from(hexString, 'hex').toString('base64')
+    return base64String.replace(/[\/]/g, `-`); 
+}
 
 module.exports.saveAvatar = (file, dir, name) => {
     return file.then(file => {
@@ -41,7 +49,7 @@ module.exports.saveAvatar = (file, dir, name) => {
 module.exports.saveFileToTemp = file => {
     return file.then(file => {
         const { createReadStream, filename, mimetype } = file;
-        const uuid = uuidv4();
+        const uuid = helps.uuid();
         const saveName = filename.replace(/(.+?)(\.[^.]*$|$)/, `${uuid}$2`);
 
         const fileStoreTemp = config.get('file-store-tmp');
@@ -85,7 +93,7 @@ module.exports.saveFile = ({ uuid, name: rawName, dest }, callback) => {
 
 module.exports.saveFileMultiple = (files,dest) => {
     return Promise.all(files.map(file => new Promise((resolve, reject)=> {
-        module.exports.saveFile({
+        helps.saveFile({
             uuid: file.uuid,
             name: file.filename,
             dest: path.join(dest, file.uuid),

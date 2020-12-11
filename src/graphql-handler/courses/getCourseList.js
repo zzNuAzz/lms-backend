@@ -15,6 +15,7 @@ const getCourseList = async (_, arg, { userCtx }) => {
         limit: pageSize,
         offset: pageNumber * pageSize,
         where: snakeCase(filters),
+        order: [['course_id', 'desc']],
         nest: true,
         raw: true,
     });

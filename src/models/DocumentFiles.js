@@ -16,6 +16,12 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
 
+        mimetype: {
+            type: Sequelize.STRING,
+            // values: [],
+            allowNull: false,
+        },
+        
         url: {
             type: Sequelize.STRING,
             allowNull: false,
@@ -23,12 +29,6 @@ module.exports = (sequelize, Sequelize) => {
 
         path: {
             type: Sequelize.STRING,
-            allowNull: false,
-        },
-
-        mimetype: {
-            type: Sequelize.STRING,
-            // values: [],
             allowNull: false,
         },
     });

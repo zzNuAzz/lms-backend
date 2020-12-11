@@ -19,12 +19,23 @@ module.exports = (sequelize, Sequelize) => {
         description: {
             type: Sequelize.TEXT,
         },
+        
+        create_at: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+
+        update_at: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
     });
 
     Courses.associate = models => {
         Courses.hasMany(models.CourseMembers, {
             foreignKey: 'course_id',
             sourceKey: 'course_id',
+            as: 'members',
         });
         Courses.hasMany(models.ForumThreads, {
             foreignKey: 'course_id',
@@ -33,15 +44,17 @@ module.exports = (sequelize, Sequelize) => {
         Courses.hasMany(models.Assignments, {
             foreignKey: 'course_id',
             sourceKey: 'course_id',
+            as: 'assignments',
         });
         Courses.hasMany(models.Documents, {
             foreignKey: 'course_id',
             sourceKey: 'course_id',
+            'as': 'courses',
         });
         Courses.belongsTo(models.Users, {
-            as: 'host',
             foreignKey: 'host_id',
             targetKey: 'user_id',
+            as: 'host',
         });
     };
     return Courses;

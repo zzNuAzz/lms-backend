@@ -12,7 +12,13 @@ const createCourse = async (_, { name, description }, { userCtx }) => {
             user: { userId: hostId },
         } = userCtx;
 
-        const course = await db.Courses.create(snakeCase({name, description, hostId}));
+        const course = await db.Courses.create(snakeCase({
+            hostId,
+            name,
+            description,
+            createAt: Date.now(),
+            updateAt: Date.now(),
+        }));
 
         const insertedId = camelCase(course.toJSON()).courseId;
         return {

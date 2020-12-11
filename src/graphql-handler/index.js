@@ -57,18 +57,19 @@ const resolvers = {
         updateCourseMember: mustBeTeacher(courses.updateCourseMember),
         updateCourse: mustBeTeacher(courses.updateCourse),
         
-
-        createThread: mustBeLogin(threads.createThread),
-        editThread: mustBeLogin(threads.editThread),
+        createDocument: mustBeTeacher(documents.createDocument),
+        editDocument: mustBeTeacher(documents.editDocument),
 
         createAssignment: mustBeTeacher(assignments.createAssignment),
         editAssignment: mustBeTeacher(assignments.editAssignment),
 
+        createSubmission: mustBeStudent(submissions.createSubmission),
+
+        createThread: mustBeLogin(threads.createThread),
+        editThread: mustBeLogin(threads.editThread),
+        
         createPost: mustBeLogin(posts.createPost),
         editPost: mustBeLogin(posts.editPost),
-        
-        createDocument: mustBeTeacher(documents.createDocument),
-        editDocument: mustBeTeacher(documents.editDocument),
 
         uploadFileSingle: mustBeLogin(uploadFile.single),
         uploadFileMultiple: mustBeLogin(uploadFile.multiple),

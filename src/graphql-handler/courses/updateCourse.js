@@ -21,6 +21,7 @@ const updateCourse = async (_, args, { userCtx }) => {
         
         if (description) {
             course['description'] = description;
+            course['update_at'] = Date.now();
         }
         await course.save();
         return {

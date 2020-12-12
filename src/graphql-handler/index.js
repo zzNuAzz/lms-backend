@@ -59,6 +59,7 @@ const resolvers = {
         
         createDocument: mustBeTeacher(documents.createDocument),
         editDocument: mustBeTeacher(documents.editDocument),
+        deleteDocument: mustBeTeacher(documents.deleteDocument),
 
         createAssignment: mustBeTeacher(assignments.createAssignment),
         editAssignment: mustBeTeacher(assignments.editAssignment),
@@ -67,9 +68,11 @@ const resolvers = {
 
         createThread: mustBeLogin(threads.createThread),
         editThread: mustBeLogin(threads.editThread),
-        
+        deleteThread: mustBeLogin(threads.deleteThread),
+
         createPost: mustBeLogin(posts.createPost),
         editPost: mustBeLogin(posts.editPost),
+        deletePost: mustBeLogin(posts.deletePost),
 
         uploadFileSingle: mustBeLogin(uploadFile.single),
         uploadFileMultiple: mustBeLogin(uploadFile.multiple),

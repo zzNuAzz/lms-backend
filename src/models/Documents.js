@@ -37,6 +37,8 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'document_id',
             sourceKey: 'document_id',
             as: 'files',
+            onDelete: 'CASCADE',
+            hooks: true, 
         });
     };
     return Documents;

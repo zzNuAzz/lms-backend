@@ -4,13 +4,13 @@ const {
     AuthenticationError,
 } = require('apollo-server-express');
 
-const editPost = async (_, args, { userCtx }) => {
+const deletePost = async (_, args, { userCtx }) => {
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
             user: { userId },
         } = userCtx;
-        const { postId, content } = args;
+        const { postId } = args;
         const post = await db.ThreadPosts.findByPk(postId);
 
         if(post == null) {
@@ -19,15 +19,12 @@ const editPost = async (_, args, { userCtx }) => {
 
         if (post['author_id'] !== userId) {
             throw new AuthenticationError(
-                "You don't have permission to edit on this post."
+                "You don't have permission to delete this post."
             );
         }
         
-        if (content) {
-            post['content'] = content;
-            post['update_at'] = Date.now();
-        }
-        await post.save();
+        await post.destroy();
+
         return {
             success: true,
         };
@@ -44,4 +41,4 @@ const editPost = async (_, args, { userCtx }) => {
         };
     }
 };
-module.exports = editPost;
+module.exports = deletePost;

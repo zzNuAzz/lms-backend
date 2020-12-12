@@ -4,8 +4,8 @@ const {
     AuthenticationError,
 } = require('apollo-server-express');
 
-const editDocument = async (_, args, { userCtx }) => {
-    const { documentId, title, description } = args;
+const deleteDocument = async (_, args, { userCtx }) => {
+    const { documentId } = args;
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
@@ -13,26 +13,19 @@ const editDocument = async (_, args, { userCtx }) => {
         } = userCtx;
 
         const document = await db.Documents.findByPk(documentId, {
-            include: 'course'
-        });
+			include: 'course'
+		});
         if (document == null) {
             throw new UserInputError('Document does not exist');
         }
         if (document.course['host_id'] !== authorId) {
             throw new AuthenticationError(
-                'You does not have permission to edit this document!'
+                'You does not have permission to delete this document!'
             );
-        }
-        
-        if (title) {
-            document['title'] = title;
-            document['update_at'] = Date.now();
-        }
-        if (description) {
-            document['description'] = description;
-            document['update_at'] = Date.now();
-        }
-        await document.save();
+		}
+		
+        await document.destroy();
+
         return { success: true };
     } catch (err) {
         if (
@@ -47,4 +40,4 @@ const editDocument = async (_, args, { userCtx }) => {
         };
     }
 };
-module.exports = editDocument;
+module.exports = deleteDocument;

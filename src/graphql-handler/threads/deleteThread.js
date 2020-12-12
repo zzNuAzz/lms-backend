@@ -10,31 +10,20 @@ const editThread = async (_, args, { userCtx }) => {
         const {
             user: { userId },
         } = userCtx;
-        const { threadId, title, content, tags } = args;
+        const { threadId } = args;
         const thread = await db.ForumThreads.findByPk(threadId);
-        if(thread === null) {
-            throw new UserInputError("Thread does not exist.");
+
+        if (thread === null) {
+            throw new UserInputError('Thread does not exist.');
         }
         if (thread['author_id'] !== userId) {
             throw new AuthenticationError(
-                "You don't have permission to edit on this thread."
+                "You don't have permission to delete this thread."
             );
         }
-        if (title) {
-            thread['title'] = title;
-            thread['update_at'] = Date.now();
-        }
-        if (content) {
-            thread['content'] = content;
-            thread['update_at'] = Date.now();
-        }
 
-        if (tags) {
-            thread['tags'] = title;
-            thread['update_at'] = Date.now();
-        }
+        await thread.destroy();
 
-        await thread.save();
         return { success: true };
     } catch (err) {
         if (

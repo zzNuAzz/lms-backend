@@ -316,16 +316,22 @@ type Mutation {
     createDocument(document: DocumentInput!): InsertedMessage! 
     # edit document content (for teacher)
     editDocument(documentId: Int! title: String description: String): BooleanMessage!
+    # delete document (for teacher)
+    deleteDocument(documentId: Int!): BooleanMessage!
 
     # create thread forum
     createThread(courseId: Int!, title: String!, content: String! tags: String): InsertedMessage!
     # edit thread details
     editThread(threadId:Int! title: String content: String): BooleanMessage!
+    # delete thread
+    deleteThread(threadId: Int!): BooleanMessage!
 
     # create post 
     createPost(threadId: Int! content: String!): InsertedMessage!
     # edit post
     editPost(postId: Int! content: String!): BooleanMessage!
+    # delete post
+    deletePost(postId: Int!): BooleanMessage!
 
     # create assignment 
     createAssignment(assignment: AssignmentInput!): InsertedMessage!

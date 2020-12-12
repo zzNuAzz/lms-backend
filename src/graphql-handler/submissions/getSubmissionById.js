@@ -21,7 +21,7 @@ const getSubmissionById = async (_, args, { userCtx }) => {
     const submission = parseObject(_submission);
 
     if(submission === null) {
-        throw new UserInputError("submissionId is invalid");
+        throw new UserInputError("Submission does not exist.");
     }
 
     if (role === 'Teacher' && submission.assignment.course['host_id'] !== userId) {

@@ -13,7 +13,7 @@ const editPost = async (_, args, { userCtx }) => {
         const { postId, content } = args;
         const post = await db.ThreadPosts.findByPk(postId);
 
-        if(post == null) {
+        if(post === null) {
             throw new UserInputError("Post does not exist!")
         }
 

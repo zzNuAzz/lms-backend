@@ -15,7 +15,7 @@ const createDocument = async (_, args, { userCtx }) => {
         } = userCtx;
         const course = await db.Courses.findByPk(courseId, { raw: true });
         if (course == null) {
-            throw new UserInputError('CourseId does not exist');
+            throw new UserInputError('Course does not exist');
         }
         if (course['host_id'] !== authorId) {
             throw new AuthenticationError(

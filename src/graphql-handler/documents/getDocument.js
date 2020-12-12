@@ -21,7 +21,7 @@ const getDocument = async (_, args, { userCtx }) => {
     const document = parseObject(_document);
     
     if(document === null) {
-        throw new UserInputError("documentId is invalid.");
+        throw new UserInputError("Document does not exist.");
     }
     
     const course = document.course;

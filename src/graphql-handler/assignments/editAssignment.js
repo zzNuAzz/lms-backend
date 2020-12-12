@@ -12,6 +12,9 @@ const editAssignment = async (_, args, { userCtx }) => {
         } = userCtx;
         const { assignmentId, title, content, dueDate } = args;
         const assignment = await db.Assignments.findByPk(assignmentId);
+        if(assignment === null) {
+            throw new UserInputError("Assignment does not exist.");
+        }
         if (assignment['author_id'] !== userId) {
             throw new AuthenticationError(
                 "You don't have permission to edit on this assignment."

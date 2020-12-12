@@ -13,8 +13,8 @@ const createPost = async (_, { threadId, content }, { userCtx }) => {
         } = userCtx;
 
         const thread = await db.ForumThreads.findByPk(threadId, { raw: true });
-        if (thread == null) {
-            throw new UserInputError('ThreadId does not exist');
+        if (thread === null) {
+            throw new UserInputError('Thread does not exist');
         }
         if (role === 'Teacher' && thread['author_id'] !== authorId) {
             throw new AuthenticationError(

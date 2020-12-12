@@ -311,6 +311,8 @@ type Mutation {
     updateCourse(courseId: Int!, description: String!): BooleanMessage!
     # update course member details
     updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
+    # delete course
+    deleteCourse(courseId: Int!): BooleanMessage!
 
     # create document (for teacher)
     createDocument(document: DocumentInput!): InsertedMessage! 

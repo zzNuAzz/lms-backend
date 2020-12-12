@@ -53,10 +53,14 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'assignment_id',
             sourceKey: 'assignment_id',
             as: 'files',
+            onDelete: 'CASCADE',
+            hooks: true, 
         });
         Assignments.hasMany(models.Submissions, {
             foreignKey: 'assignment_id',
             sourceKey: 'assignment_id',
+            onDelete: 'CASCADE',
+            hooks: true, 
         });
 
     };

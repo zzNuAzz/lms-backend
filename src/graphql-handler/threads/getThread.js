@@ -26,7 +26,7 @@ const getThread = async (_, args, { userCtx }) => {
     });
 
     if(thread === null) {
-        throw new UserInputError("ThreadId is invalid");
+        throw new UserInputError("Thread does not exist.");
     }
 
     const course = thread.course;

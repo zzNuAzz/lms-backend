@@ -7,5 +7,5 @@ module.exports.enrollCourse = require('./enrollCourse');
 
 module.exports.updateCourse = require('./updateCourse');
 module.exports.createCourse = require('./createCourse');
-
+module.exports.deleteCourse = require('./deleteCourse');
 

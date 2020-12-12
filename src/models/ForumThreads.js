@@ -49,7 +49,7 @@ module.exports = (sequelize, Sequelize) => {
         ForumThreads.hasMany(models.ThreadPosts, {
             foreignKey: 'thread_id',
             sourceKey: 'thread_id',
-            as: 'post'
+            as: 'post',
         });
     };
     return ForumThreads;

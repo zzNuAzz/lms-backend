@@ -4,28 +4,26 @@ const {
     AuthenticationError,
 } = require('apollo-server-express');
 
-const updateCourse = async (_, args, { userCtx }) => {
+const deleteCourse = async (_, args, { userCtx }) => {
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
             user: { userId },
         } = userCtx;
-        const { courseId, description } = args;
+        const { courseId } = args;
         const course = await db.Courses.findByPk(courseId);
+
         if(course === null) {
             throw new UserInputError("Course does not exist.")
         }
         if (course['host_id'] !== userId) {
             throw new AuthenticationError(
-                "You don't have permission to edit on this course."
+                "You don't have permission to delete this course."
             );
         }
         
-        if (description) {
-            course['description'] = description;
-            course['update_at'] = Date.now();
-        }
-        await course.save();
+        await course.destroy();
+       
         return {
             success: true,
         };
@@ -42,4 +40,4 @@ const updateCourse = async (_, args, { userCtx }) => {
         };
     }
 };
-module.exports = updateCourse;
+module.exports = deleteCourse;

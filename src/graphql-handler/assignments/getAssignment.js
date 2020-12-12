@@ -21,7 +21,7 @@ const getAssignment = async (_, args, { userCtx }) => {
     const assignment = parseObject(_assignment);
     
     if(assignment === null) {
-        throw new UserInputError("assignmentId is invalid.");
+        throw new UserInputError("Assignment does not exist.");
     }
     
     const course = assignment.course;
@@ -35,7 +35,7 @@ const getAssignment = async (_, args, { userCtx }) => {
         const member = await db.CourseMembers.findOne({
             where: snakeCase(filter),
         });
-        if (member == null) {
+        if (member === null) {
             throw new AuthenticationError(
                 'You does not have permission with this course!'
             );

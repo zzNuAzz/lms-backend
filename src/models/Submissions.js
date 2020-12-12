@@ -44,7 +44,9 @@ module.exports = (sequelize, Sequelize) => {
         Submissions.hasMany(models.SubmissionFiles, {
             foreignKey: 'submission_id',
             sourceKey: 'submission_id',
-            as: 'files'
+            as: 'files',
+            onDelete: 'CASCADE',
+            hooks: true, 
         });
     };
     return Submissions;

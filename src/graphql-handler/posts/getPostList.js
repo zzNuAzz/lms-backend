@@ -21,8 +21,8 @@ const getPostList = async (_, args, { userCtx }) => {
         raw: true
     })
 
-    if (thread == null) {
-        throw new UserInputError('ThreadId is invalid');
+    if (thread === null) {
+        throw new UserInputError('Thread does not exist.');
     }
     const course = thread.course;
     if (role === 'Teacher' && course['host_id'] !== userId) {

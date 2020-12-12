@@ -14,7 +14,7 @@ const createThread = async (_, { courseId, title, content, tags }, { userCtx }) 
 
         const course = await db.Courses.findByPk(courseId, { raw: true });
         if (course == null) {
-            throw new UserInputError('CourseId is invalid');
+            throw new UserInputError('Course does not exist.');
         }
         if (role === 'Teacher' && course['host_id'] !== authorId) {
             throw new AuthenticationError(

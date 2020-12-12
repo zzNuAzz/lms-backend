@@ -36,6 +36,8 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'course_id',
             sourceKey: 'course_id',
             as: 'members',
+            onDelete: 'CASCADE',
+            hooks: true, 
         });
         Courses.hasMany(models.ForumThreads, {
             foreignKey: 'course_id',
@@ -45,11 +47,15 @@ module.exports = (sequelize, Sequelize) => {
             foreignKey: 'course_id',
             sourceKey: 'course_id',
             as: 'assignments',
+            onDelete: 'CASCADE',
+            hooks: true, 
         });
         Courses.hasMany(models.Documents, {
             foreignKey: 'course_id',
             sourceKey: 'course_id',
             'as': 'courses',
+            onDelete: 'CASCADE',
+            hooks: true, 
         });
         Courses.belongsTo(models.Users, {
             foreignKey: 'host_id',

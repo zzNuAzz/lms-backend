@@ -1,3 +1,4 @@
+const { AuthenticationError } = require('apollo-server-express');
 const { snakeCase, camelCase } = require('change-case-object');
 const db = require('../../models');
 
@@ -14,7 +15,7 @@ const getUserCourses = async (_, args, { userCtx }) => {
     const courseList = await db.Courses.findAll({
         include: [
             {
-                model: db.CourseMembers,
+                association: 'members',
                 where: snakeCase(filters),
             },
             {

@@ -10,7 +10,7 @@ const updateCourse = async (_, args, { userCtx }) => {
         const {
             user: { userId },
         } = userCtx;
-        const { courseId, description } = args;
+        const { courseId, shortDescription, description } = args;
         const course = await db.Courses.findByPk(courseId);
         if(course === null) {
             throw new UserInputError("Course does not exist.")
@@ -19,6 +19,11 @@ const updateCourse = async (_, args, { userCtx }) => {
             throw new AuthenticationError(
                 "You don't have permission to edit on this course."
             );
+        }
+
+        if (shortDescription) {
+            course['short_description'] = shortDescription;
+            course['update_at'] = Date.now();
         }
         
         if (description) {

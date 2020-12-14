@@ -16,8 +16,14 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false,
         },
 
+        short_description: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+
         description: {
             type: Sequelize.TEXT,
+            allowNull: false
         },
         
         create_at: {

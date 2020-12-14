@@ -35,6 +35,7 @@ type CourseDetails {
     courseId: Int!
     host: UserProfile!
     name: String!
+    shortDescription: String!
     description: String
     createAt: Date
     updateAt: Date
@@ -306,9 +307,9 @@ type Mutation {
     enrollCourse(courseId: Int!, description: String): BooleanMessage!
 
     # create course (for teacher)
-    createCourse(name: String! description: String!): InsertedMessage! 
+    createCourse(name: String! shortDescription: String! description: String!): InsertedMessage! 
     # update course details
-    updateCourse(courseId: Int!, description: String!): BooleanMessage!
+    updateCourse(courseId: Int!, shortDescription: String description: String): BooleanMessage!
     # update course member details
     updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
     # delete course
@@ -331,14 +332,14 @@ type Mutation {
     # create post 
     createPost(threadId: Int! content: String!): InsertedMessage!
     # edit post
-    editPost(postId: Int! content: String!): BooleanMessage!
+    editPost(postId: Int! content: String): BooleanMessage!
     # delete post
     deletePost(postId: Int!): BooleanMessage!
 
     # create assignment 
     createAssignment(assignment: AssignmentInput!): InsertedMessage!
     # edit assignment
-    editAssignment(assignmentId: Int! title: String! content: String! dueDate: Date!): BooleanMessage!
+    editAssignment(assignmentId: Int! title: String content: String dueDate: Date): BooleanMessage!
 
     #create submission
     createSubmission(submission: SubmissionInput!): InsertedMessage!

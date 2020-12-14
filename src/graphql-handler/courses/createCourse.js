@@ -5,7 +5,7 @@ const {
     AuthenticationError,
 } = require('apollo-server-express');
 
-const createCourse = async (_, { name, description }, { userCtx }) => {
+const createCourse = async (_, { name, shortDescription ,description }, { userCtx }) => {
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
@@ -15,6 +15,7 @@ const createCourse = async (_, { name, description }, { userCtx }) => {
         const course = await db.Courses.create(snakeCase({
             hostId,
             name,
+            shortDescription,
             description,
             createAt: Date.now(),
             updateAt: Date.now(),

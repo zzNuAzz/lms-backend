@@ -1,11 +1,16 @@
 const { snakeCase, camelCase } = require('change-case-object');
 const db = require('../../models');
-
+const { Op } = require('sequelize');
 const getCourseMemberList = async (_, arg, { userCtx }) => {
     const { courseId, status, pageNumber = 0, pageSize = 10 } = arg;
 
-    const filters = { courseId };
+    const filters = { ['course_id']: courseId };
     if(status) filters.status = status;
+    if(filters.status === undefined) {
+        filters[Op.not] = {
+            status: "Rejected"
+        }
+    }
 
     const totalRecords = await db.CourseMembers.count({
         where: snakeCase(filters),
@@ -13,9 +18,10 @@ const getCourseMemberList = async (_, arg, { userCtx }) => {
 
     const memberList = await db.CourseMembers.findAll({
         include: ['user'],
-        where: snakeCase(filters),
+        where: filters,
         limit: pageSize,
         offset: pageNumber * pageSize,
+        order: [['status', 'ASC'], ['course_member_id', 'DESC']],
         raw: true,
         nest: true
     });

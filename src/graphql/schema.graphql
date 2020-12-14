@@ -218,7 +218,7 @@ type Query {
     # get courses  from a user
     userCourseList(userId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): UserCourseList!
     # get users from a course
-    courseMemberList(courseId: Int!, status: EnrollStatus = Accepted, pageNumber: Int = 0, pageSize: Int = 10): MemberList!
+    courseMemberList(courseId: Int!, status: EnrollStatus, pageNumber: Int = 0, pageSize: Int = 10): MemberList!
     # get document by document Id
     document(documentId: Int!): Document!
     # get list document in a course

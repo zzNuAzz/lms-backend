@@ -55,7 +55,7 @@ const resolvers = {
         createCourse: mustBeTeacher(courses.createCourse),
         enrollCourse: mustBeStudent(courses.enrollCourse),
         updateCourseMember: mustBeTeacher(courses.updateCourseMember),
-        updateCourse: mustBeTeacher(courses.updateCourse),
+        editCourse: mustBeTeacher(courses.editCourse),
         deleteCourse: mustBeTeacher(courses.deleteCourse),
         
         createDocument: mustBeTeacher(documents.createDocument),

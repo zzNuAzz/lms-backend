@@ -309,7 +309,7 @@ type Mutation {
     # create course (for teacher)
     createCourse(name: String! shortDescription: String! description: String!): InsertedMessage! 
     # update course details
-    updateCourse(courseId: Int!, shortDescription: String description: String): BooleanMessage!
+    editCourse(courseId: Int! name: String shortDescription: String description: String): BooleanMessage!
     # update course member details
     updateCourseMember(courseMemberId: Int!, status: EnrollStatus!, description: String): BooleanMessage!
     # delete course

@@ -3,9 +3,10 @@ const {
     UserInputError,
     AuthenticationError,
 } = require('apollo-server-express');
+const { parseObject, saveFileMultiple } = require('../../helps');
 
-const editDocument = async (_, args, { userCtx }) => {
-    const { documentId, title, description } = args;
+const editDocument = async (_, { documentEdit }, { userCtx }) => {
+    const { documentId, title, description, removeFileId, newFiles } = documentEdit;
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
@@ -13,7 +14,7 @@ const editDocument = async (_, args, { userCtx }) => {
         } = userCtx;
 
         const document = await db.Documents.findByPk(documentId, {
-            include: 'course'
+            include: ['course', 'files']
         });
         if (document == null) {
             throw new UserInputError('Document does not exist');
@@ -24,6 +25,8 @@ const editDocument = async (_, args, { userCtx }) => {
             );
         }
         
+        const documentFiles = await saveFileMultiple(newFiles, 'document');
+
         if (title) {
             document['title'] = title;
             document['update_at'] = Date.now();
@@ -32,7 +35,22 @@ const editDocument = async (_, args, { userCtx }) => {
             document['description'] = description;
             document['update_at'] = Date.now();
         }
-        await document.save();
+        const files = parseObject(document.files);
+        const removeFile = files.map(file => file['document_file_id']).filter(id => {
+            return removeFileId.includes(id);
+        });
+        if(removeFile || newFiles) {
+            document['update_at'] = Date.now();
+        }
+        await Promise.all([
+            document.save(), 
+            removeFile && db.DocumentFiles.destroy({ where: { ['document_file_id']: removeFile }}),
+            newFiles && db.DocumentFiles.bulkCreate(documentFiles.map(file => {
+                    file['document_id'] = documentId;
+                    return file;
+                })
+            ),
+        ]);
         return { success: true };
     } catch (err) {
         if (

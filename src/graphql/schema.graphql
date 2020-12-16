@@ -358,6 +358,8 @@ type Mutation {
     createAssignment(assignment: AssignmentInput!): InsertedMessage!
     # edit assignment
     editAssignment(changes: AssignmentEdit): BooleanMessage!
+    # delete assignment
+    deleteAssignment(assignmentId: Int!): BooleanMessage!
 
     #create submission
     createSubmission(submission: SubmissionInput!): InsertedMessage!

@@ -64,6 +64,7 @@ const resolvers = {
 
         createAssignment: mustBeTeacher(assignments.createAssignment),
         editAssignment: mustBeTeacher(assignments.editAssignment),
+        deleteAssignment: mustBeTeacher(assignments.deleteAssignment),
 
         createSubmission: mustBeStudent(submissions.createSubmission),
 

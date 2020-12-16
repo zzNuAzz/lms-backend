@@ -9,7 +9,7 @@ const uploadAvatar = async (_, { avatar }, { userCtx }) => {
         user: { userId },
     } = userCtx;
     try {
-        const { url } = await helps.saveAvatar(avatar, 'avatar', userId);
+        const { url } = await helps.saveAvatar(avatar, 'avatar', `${userId}_${helps.uuid()}`);
         await db.Users.update(
             snakeCase({ pictureUrl: url }),
             snakeCase({ where: { userId } })

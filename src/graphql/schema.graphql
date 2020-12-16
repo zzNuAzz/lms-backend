@@ -296,6 +296,16 @@ input AssignmentInput {
     files: [File!] = []
 }
 
+input AssignmentEdit {
+    assignmentId: Int!
+    title: String
+    content: String
+    dueDate: Date
+    removeFileId: [Int!]! = []
+    newFiles: [File!] = []
+}
+
+
 input SubmissionInput {
     assignmentId: Int!
     description: String
@@ -326,7 +336,7 @@ type Mutation {
     # create document (for teacher)
     createDocument(document: DocumentInput!): InsertedMessage! 
     # edit document content (for teacher)
-    editDocument(documentEdit: DocumentEdit!): BooleanMessage!
+    editDocument(changes: DocumentEdit!): BooleanMessage!
     # delete document (for teacher)
     deleteDocument(documentId: Int!): BooleanMessage!
 
@@ -347,7 +357,7 @@ type Mutation {
     # create assignment 
     createAssignment(assignment: AssignmentInput!): InsertedMessage!
     # edit assignment
-    editAssignment(assignmentId: Int! title: String content: String dueDate: Date): BooleanMessage!
+    editAssignment(changes: AssignmentEdit): BooleanMessage!
 
     #create submission
     createSubmission(submission: SubmissionInput!): InsertedMessage!

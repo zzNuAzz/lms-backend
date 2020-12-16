@@ -5,8 +5,8 @@ const {
 } = require('apollo-server-express');
 const { parseObject, saveFileMultiple } = require('../../helps');
 
-const editDocument = async (_, { documentEdit }, { userCtx }) => {
-    const { documentId, title, description, removeFileId, newFiles } = documentEdit;
+const editDocument = async (_, { changes }, { userCtx }) => {
+    const { documentId, title, description, removeFileId, newFiles } = changes;
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
@@ -14,7 +14,7 @@ const editDocument = async (_, { documentEdit }, { userCtx }) => {
         } = userCtx;
 
         const document = await db.Documents.findByPk(documentId, {
-            include: ['course', 'files']
+            include: ['course', 'files'],
         });
         if (document == null) {
             throw new UserInputError('Document does not exist');
@@ -26,7 +26,7 @@ const editDocument = async (_, { documentEdit }, { userCtx }) => {
         }
         
         const documentFiles = await saveFileMultiple(newFiles, 'document');
-
+        
         if (title) {
             document['title'] = title;
             document['update_at'] = Date.now();
@@ -35,6 +35,7 @@ const editDocument = async (_, { documentEdit }, { userCtx }) => {
             document['description'] = description;
             document['update_at'] = Date.now();
         }
+        
         const files = parseObject(document.files);
         const removeFile = files.map(file => file['document_file_id']).filter(id => {
             return removeFileId.includes(id);

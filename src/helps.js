@@ -22,7 +22,6 @@ module.exports.uuid = () => {
 
 module.exports.saveAvatar = (file, dir, name) => {
     return file.then(file => {
-        console.log(name)
         const { createReadStream, filename, mimetype } = file;
         const saveName = name
             ? normalizeFileName(filename).replace(

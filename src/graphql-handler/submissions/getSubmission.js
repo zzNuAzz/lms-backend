@@ -16,6 +16,7 @@ const getSubmission = async (_, args, { userCtx }) => {
     const _submission = await db.Submissions.findOne({
         include: ['author', 'files', {association: 'assignment', include: ['course']}],
         where: snakeCase({assignmentId, authorId}),
+        order: [['submission_id', 'desc']],
         nest: true
     })
     const submission = parseObject(_submission);

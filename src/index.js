@@ -9,7 +9,7 @@ const { installHandler } = require('./graphql-handler');
 const routes = require('./routes');
 
 const app = express();
-app.use(morgan('tiny'));
+app.use(morgan('[:date[web]] :method :url :status :res[content-length] - :response-time ms'));
 // app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

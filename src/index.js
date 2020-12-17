@@ -35,7 +35,7 @@ db.sequelize
         // logging: console.log,
     })
     .then(async () => {
-        console.log('connect db success.');
+        console.log('Connect database success.');
         if (forceSyncDB) {
             await require('../seed')();
         }

@@ -312,6 +312,14 @@ input SubmissionInput {
     files: [File!] = []
 }
 
+input SubmissionEdit {
+    submissionId: Int!
+    description: String
+    removeFileId: [Int!]! = []
+    newFiles: [File!] = []
+
+}
+
 type Mutation {
     # create account, default Student type
     createUserAccount(user: UserAccountInput!): UserProfile!
@@ -361,8 +369,10 @@ type Mutation {
     # delete assignment
     deleteAssignment(assignmentId: Int!): BooleanMessage!
 
-    #create submission
+    # create submission
     createSubmission(submission: SubmissionInput!): InsertedMessage!
+    # edit submission
+    editSubmission(changes: SubmissionEdit!): BooleanMessage!
 
     # file upload
     uploadFileSingle(file: Upload!): FileUpload!

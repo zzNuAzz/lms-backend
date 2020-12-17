@@ -66,7 +66,9 @@ const resolvers = {
         editAssignment: mustBeTeacher(assignments.editAssignment),
         deleteAssignment: mustBeTeacher(assignments.deleteAssignment),
 
+
         createSubmission: mustBeStudent(submissions.createSubmission),
+        editSubmission: mustBeStudent(submissions.editSubmission),
 
         createThread: mustBeLogin(threads.createThread),
         editThread: mustBeLogin(threads.editThread),

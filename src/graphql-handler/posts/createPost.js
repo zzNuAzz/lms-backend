@@ -9,20 +9,22 @@ const createPost = async (_, { threadId, content }, { userCtx }) => {
     try {
         if (userCtx.error) throw new AuthenticationError(userCtx.error);
         const {
-            user: { userId: authorId, role },
+            user: { userId, role },
         } = userCtx;
 
-        const thread = await db.ForumThreads.findByPk(threadId, { raw: true });
+        const thread = await db.ForumThreads.findByPk(threadId, {
+            include: 'course'
+        });
         if (thread === null) {
             throw new UserInputError('Thread does not exist');
         }
-        if (role === 'Teacher' && thread['author_id'] !== authorId) {
+        if (role === 'Teacher' && thread.course['host_id'] !== userId) {
             throw new AuthenticationError(
                 'You does not have permission with this thread!'
             );
         }
         if (role === 'Student') {
-            const filter = { userId: authorId, courseId: thread['course_id'], status: 'Accepted' };
+            const filter = { userId, courseId: thread['course_id'], status: 'Accepted' };
             const member = await db.CourseMembers.findOne({
                 where: snakeCase(filter),
             });
@@ -36,7 +38,7 @@ const createPost = async (_, { threadId, content }, { userCtx }) => {
         const post = await db.ThreadPosts.create(
             snakeCase({
                 threadId,
-                authorId,
+                authorId: userId,
                 content,
                 createAt: Date.now(),
                 updateAt: Date.now(),

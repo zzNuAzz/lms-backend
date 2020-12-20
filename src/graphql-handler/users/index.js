@@ -10,4 +10,4 @@ module.exports.uploadAvatar = require('./uploadAvatar');
 
 module.exports.resolveUser = require('./resolveUser');
 module.exports.permission = require('./permission');
-module.exports.checkUserInCourse = require('./checkUserInCourse');
+module.exports.getEnrollStatus = require('./getEnrollStatus');

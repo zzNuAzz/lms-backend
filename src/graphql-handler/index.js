@@ -23,7 +23,7 @@ const resolvers = {
         userCourseList: mustBeStudent(users.getUserCourses),
         currentUser: users.resolveUser,
         usernameAvailability: users.checkUsername,
-        checkUserInCourse: mustBeLogin(users.checkUserInCourse),
+        getEnrollStatus: mustBeStudent(users.getEnrollStatus),
 
         courseList: courses.getCourseList,
         course: courses.getCourse,

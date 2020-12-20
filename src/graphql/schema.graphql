@@ -211,6 +211,8 @@ type Query {
     userProfile(userId: Int!): UserProfile!
     # check username before create account
     usernameAvailability(username: String!): Boolean!
+    # check user enrolled course
+    checkUserInCourse(courseId: Int!): BooleanMessage!
     # get list course
     courseList(hostId: Int, pageNumber: Int = 0, pageSize: Int = 10): CourseList!
     # get course by Id

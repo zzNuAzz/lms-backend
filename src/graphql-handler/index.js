@@ -111,9 +111,9 @@ function installHandler(app) {
 }
 
 // get user from graphql query by token
-async function getContext({ req }) {
-    const userCtx = await getUser(req);
-    return { userCtx };
+async function getContext({ req, res }) {
+    const userCtx = await getUser(req, res);
+    return { userCtx, req, res };
 }
 
 module.exports = { installHandler };

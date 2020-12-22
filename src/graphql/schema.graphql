@@ -203,6 +203,16 @@ type FileUpload {
     mimetype: String!        
 }
 
+enum SortOrder {
+    DESC
+    ASC
+}
+
+input SortAttr {
+    field: String!
+    order: SortOrder! = ASC
+}
+
 # Top level declarations
 type Query {
     # get user is logging in, get by token in cookie from req
@@ -214,7 +224,7 @@ type Query {
     # check user enrolled course
     getEnrollStatus(courseId: Int!): String!
     # get list course
-    courseList(hostId: Int, pageNumber: Int = 0, pageSize: Int = 10): CourseList!
+    courseList(hostId: Int, pageNumber: Int = 0, pageSize: Int = 10 order: [[String!]!] ): CourseList!
     # get course by Id
     course(courseId: Int!): CourseDetails!
     # get courses  from a user

@@ -11,7 +11,6 @@ const getCourseList = async (_, arg, { userCtx }) => {
     }
 
     const order = snakeCase(_order);
-    console.log(order);
     // validate order
     order.map(o => {
         if(o.length < 2) throw new UserInputError("Too few param in order on query.");

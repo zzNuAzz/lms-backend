@@ -203,16 +203,6 @@ type FileUpload {
     mimetype: String!        
 }
 
-enum SortOrder {
-    DESC
-    ASC
-}
-
-input SortAttr {
-    field: String!
-    order: SortOrder! = ASC
-}
-
 # Top level declarations
 type Query {
     # get user is logging in, get by token in cookie from req

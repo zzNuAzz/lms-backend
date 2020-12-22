@@ -214,7 +214,7 @@ type Query {
     # check user enrolled course
     getEnrollStatus(courseId: Int!): String!
     # get list course
-    courseList(hostId: Int, pageNumber: Int = 0, pageSize: Int = 10 order: [[String!]!] ): CourseList!
+    courseList(hostId: Int, pageNumber: Int = 0, pageSize: Int = 10 order: [[String!]!] = [["courseId","desc"]] ): CourseList!
     # get course by Id
     course(courseId: Int!): CourseDetails!
     # get courses  from a user

@@ -27,6 +27,7 @@ const getUserCourseListExclude = async (_, arg, { userCtx }) => {
     const courseList = await db.Courses.findAll({
         limit: pageSize,
         offset: pageNumber * pageSize,
+        include: 'host',
         where: {['course_id']: { [Op.notIn]: idCourseFilter }},
         order,
         nest: true,

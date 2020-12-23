@@ -28,7 +28,7 @@ const resolvers = {
         courseList: courses.getCourseList,
         course: courses.getCourse,
         courseMemberList: mustBeLogin(courses.getCourseMemberList),
-
+        userCourseListExclude: mustBeStudent(courses.getUserCourseListExclude),
 
         thread: mustBeLogin(threads.getThread),
         threadList: mustBeLogin(threads.getThreadList),

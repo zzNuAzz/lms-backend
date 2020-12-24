@@ -10,7 +10,7 @@ const getUserCourseListExclude = async (_, arg, { userCtx }) => {
 
     const order = snakeCase(_order);
     // validate order
-    
+    console.log(statusExclude);
     order.map(o => {
         if(o.length < 2) throw new UserInputError("Too few param in order on query.");
         if(o.length > 2) throw new UserInputError("Too more param in order on query.");
@@ -20,7 +20,7 @@ const getUserCourseListExclude = async (_, arg, { userCtx }) => {
         }
     })
 
-	const filteredCourse = await db.CourseMembers.findAll({where:{['user_id']: userId, status: { statusExclude }},  raw: true, nest: true})
+	const filteredCourse = await db.CourseMembers.findAll({where:{['user_id']: userId, status: {[Op.in]: statusExclude }},  raw: true, nest: true})
 	const idCourseFilter = filteredCourse.map(e=>e['course_id']);
 	// console.log(cccc);
 	const totalRecords = await db.Courses.count({  where: {['course_id']: {[Op.notIn]: idCourseFilter}} });

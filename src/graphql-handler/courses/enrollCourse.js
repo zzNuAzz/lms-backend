@@ -3,6 +3,7 @@ const {
     AuthenticationError,
 } = require('apollo-server-express');
 const { snakeCase, camelCase } = require('change-case-object');
+const { ForeignKeyConstraintError } = require('sequelize');
 const db = require('../../models');
 
 const enrollCourse = async (_, args, { userCtx }) => {
@@ -26,6 +27,7 @@ const enrollCourse = async (_, args, { userCtx }) => {
             result.update({ status: 'Pending', description });
         } else {
             // insert
+
             await db.CourseMembers.create(
                 snakeCase({
                     courseId,
@@ -36,6 +38,9 @@ const enrollCourse = async (_, args, { userCtx }) => {
             );
         }
     } catch (err) {
+        if(err instanceof ForeignKeyConstraintError) {
+            return { success: false, message: "Course does not exist." };
+        }
         if (
             !(err instanceof UserInputError) &&
             !(err instanceof AuthenticationError)

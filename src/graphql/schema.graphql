@@ -335,7 +335,8 @@ type Mutation {
     uploadAvatar(avatar: Upload!): BooleanMessage!
     # student enroll
     enrollCourse(courseId: Int!, description: String): BooleanMessage!
-
+    # student leave course
+    leaveCourse(courseId: Int!): BooleanMessage!
     # create course (for teacher)
     createCourse(name: String! shortDescription: String! description: String!): InsertedMessage! 
     # update course details

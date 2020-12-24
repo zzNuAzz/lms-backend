@@ -20,7 +20,7 @@ const getUserCourseListExclude = async (_, arg, { userCtx }) => {
         }
     })
 
-	const filteredCourse = await db.CourseMembers.findAll({where:{['user_id']: userId, status: {[Op.notIn]: statusExclude}},  raw: true, nest: true})
+	const filteredCourse = await db.CourseMembers.findAll({where:{['user_id']: userId, status: { statusExclude }},  raw: true, nest: true})
 	const idCourseFilter = filteredCourse.map(e=>e['course_id']);
 	// console.log(cccc);
 	const totalRecords = await db.Courses.count({  where: {['course_id']: {[Op.notIn]: idCourseFilter}} });

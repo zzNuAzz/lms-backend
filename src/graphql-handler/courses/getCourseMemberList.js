@@ -11,7 +11,7 @@ const getCourseMemberList = async (_, arg, { userCtx }) => {
             status: "Rejected"
         }
     }
-
+    
     const totalRecords = await db.CourseMembers.count({
         where: snakeCase(filters),
     });

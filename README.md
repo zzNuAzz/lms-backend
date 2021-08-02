@@ -1,4 +1,4 @@
-# [Learning-management-system](https://ritachan.site)
+# Learning-management-system
 
 Hệ thống quản lý môn học của nhóm 6 - phần backend
 
